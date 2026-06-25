@@ -133,6 +133,38 @@ nav button.active{color:var(--green);border-bottom-color:var(--green);}
   color:var(--red);text-transform:uppercase;letter-spacing:0.04em;
 }
 
+/* ── LIVE GAMES LIST (multiple concurrent live matches) ── */
+.live-games-list{display:flex;flex-direction:column;gap:0.5rem;width:100%;}
+.live-games-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:2px;
+}
+.live-games-title{
+  font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--red);display:flex;align-items:center;gap:6px;
+}
+.live-games-count{
+  font-family:'Barlow Condensed',sans-serif;font-size:0.78rem;font-weight:800;
+  color:var(--red);background:rgba(224,59,59,0.15);
+  border-radius:20px;padding:2px 9px;
+}
+.live-game-row{
+  display:flex;align-items:center;justify-content:space-between;gap:0.75rem;
+  background:rgba(224,59,59,0.07);border:1px solid rgba(224,59,59,0.18);
+  border-radius:8px;padding:0.5rem 0.85rem;
+}
+.live-game-teams{display:flex;align-items:center;gap:0.5rem;min-width:0;flex:1;}
+.live-game-flag{font-size:1.05rem;flex-shrink:0;}
+.live-game-name{
+  font-family:'Barlow Condensed',sans-serif;font-size:0.88rem;font-weight:700;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.live-game-vs{font-size:0.65rem;color:var(--muted);flex-shrink:0;}
+.live-game-score{
+  font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;
+  color:var(--red);flex-shrink:0;
+}
+
 /* ── MAIN ── */
 main{padding:1.5rem;max-width:1100px;margin:0 auto;}
 .tab-panel{display:none;animation:fadeIn 0.2s ease;}
@@ -560,6 +592,14 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
   .countdown-unit{min-width:30px;}
   .countdown-timer{gap:3px;}
 
+  /* ── Live games list mobile ── */
+  .live-game-row{padding:0.45rem 0.65rem;}
+  .live-game-name{font-size:0.78rem;}
+  .live-game-flag{font-size:0.95rem;}
+  .live-game-score{font-size:0.88rem;}
+  .live-games-title{font-size:0.58rem;}
+  .live-games-count{font-size:0.7rem;}
+
   /* ── Bottom nav: fixed, app-like, 6 icons ── */
   #bottom-nav{
     display:flex;position:fixed;bottom:0;left:0;right:0;z-index:250;
@@ -863,24 +903,30 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
 
 <!-- COUNTDOWN BANNER -->
 <div id="countdown-banner" class="countdown-banner" style="display:none;">
-  <div class="countdown-content">
-    <div class="countdown-label">⏱ Próximo partido</div>
-    <div class="countdown-match">
-      <span class="countdown-flag" id="cd-home-flag"></span>
-      <span class="countdown-team" id="cd-home-name"></span>
-      <span class="countdown-vs">vs</span>
-      <span class="countdown-team" id="cd-away-name"></span>
-      <span class="countdown-flag" id="cd-away-flag"></span>
+  <!-- LIVE MODE: list of all live matches -->
+  <div id="live-games-list" class="live-games-list" style="display:none;"></div>
+
+  <!-- COUNTDOWN MODE: next upcoming match -->
+  <div id="countdown-next-wrap" class="countdown-next-wrap" style="display:none;">
+    <div class="countdown-content">
+      <div class="countdown-label">⏱ Próximo partido (hora ARG)</div>
+      <div class="countdown-match">
+        <span class="countdown-flag" id="cd-home-flag"></span>
+        <span class="countdown-team" id="cd-home-name"></span>
+        <span class="countdown-vs">vs</span>
+        <span class="countdown-team" id="cd-away-name"></span>
+        <span class="countdown-flag" id="cd-away-flag"></span>
+      </div>
     </div>
-  </div>
-  <div class="countdown-timer" id="cd-timer">
-    <div class="countdown-unit"><span class="countdown-num" id="cd-days">00</span><span class="countdown-uns">DÍAS</span></div>
-    <div class="countdown-sep">:</div>
-    <div class="countdown-unit"><span class="countdown-num" id="cd-hours">00</span><span class="countdown-uns">HS</span></div>
-    <div class="countdown-sep">:</div>
-    <div class="countdown-unit"><span class="countdown-num" id="cd-mins">00</span><span class="countdown-uns">MIN</span></div>
-    <div class="countdown-sep">:</div>
-    <div class="countdown-unit"><span class="countdown-num" id="cd-secs">00</span><span class="countdown-uns">SEG</span></div>
+    <div class="countdown-timer" id="cd-timer">
+      <div class="countdown-unit"><span class="countdown-num" id="cd-days">00</span><span class="countdown-uns">DÍAS</span></div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-unit"><span class="countdown-num" id="cd-hours">00</span><span class="countdown-uns">HS</span></div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-unit"><span class="countdown-num" id="cd-mins">00</span><span class="countdown-uns">MIN</span></div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-unit"><span class="countdown-num" id="cd-secs">00</span><span class="countdown-uns">SEG</span></div>
+    </div>
   </div>
 </div>
 
@@ -1112,46 +1158,68 @@ function findNextUpcomingGame(){
   return upcoming.length?upcoming[0]:null;
 }
 
-function findCurrentLiveGame(){
-  const live=allGames.filter(g=>gameStatus(g)==='live');
-  return live.length?live[0]:null;
+function findAllLiveGames(){
+  return allGames.filter(g=>gameStatus(g)==='live');
 }
 
 function updateCountdownBanner(){
   const banner=document.getElementById('countdown-banner');
+  const liveListEl=document.getElementById('live-games-list');
+  const countdownWrapEl=document.getElementById('countdown-next-wrap');
 
-  // Priority: if something is live right now, show that instead of a countdown
-  const liveGame=findCurrentLiveGame();
-  if(liveGame){
+  // Priority: if anything is live right now, show ALL live matches as a list
+  const liveGames=findAllLiveGames();
+  if(liveGames.length){
     banner.style.display='flex';
     banner.classList.add('is-live');
-    document.getElementById('cd-home-flag').textContent=flag(homeName(liveGame));
-    document.getElementById('cd-home-name').textContent=homeName(liveGame);
-    document.getElementById('cd-away-flag').textContent=flag(awayName(liveGame));
-    document.getElementById('cd-away-name').textContent=awayName(liveGame);
-    document.querySelector('.countdown-label').textContent='🔴 Jugándose ahora';
-    document.getElementById('cd-timer').innerHTML='<span class="countdown-live-badge"><span class="live-dot"></span>EN VIVO</span>';
+    liveListEl.style.display='flex';
+    countdownWrapEl.style.display='none';
+
+    let html=`<div class="live-games-header">
+      <span class="live-games-title">🔴 Jugándose ahora</span>
+      <span class="live-games-count">${liveGames.length} EN VIVO</span>
+    </div>`;
+    liveGames.forEach(g=>{
+      const hs=homeScore(g), as_=awayScore(g);
+      html+=`<div class="live-game-row">
+        <div class="live-game-teams">
+          <span class="live-game-flag">${flag(homeName(g))}</span>
+          <span class="live-game-name">${homeName(g)}</span>
+          <span class="live-game-vs">vs</span>
+          <span class="live-game-name">${awayName(g)}</span>
+          <span class="live-game-flag">${flag(awayName(g))}</span>
+        </div>
+        <div class="live-game-score">${hs??'?'} - ${as_??'?'}</div>
+      </div>`;
+    });
+    liveListEl.innerHTML=html;
+
     if(countdownInterval){clearInterval(countdownInterval);countdownInterval=null;}
     return;
   }
 
+  // No live games: fall back to countdown for next upcoming match
+  liveListEl.style.display='none';
+  banner.classList.remove('is-live');
+
   const next=findNextUpcomingGame();
   if(!next){
     banner.style.display='none';
+    countdownWrapEl.style.display='none';
     if(countdownInterval){clearInterval(countdownInterval);countdownInterval=null;}
     return;
   }
 
   countdownTargetGame=next;
   banner.style.display='flex';
-  banner.classList.remove('is-live');
+  countdownWrapEl.style.display='flex';
   document.querySelector('.countdown-label').textContent='⏱ Próximo partido (hora ARG)';
   document.getElementById('cd-home-flag').textContent=flag(homeName(next.g));
   document.getElementById('cd-home-name').textContent=homeName(next.g);
   document.getElementById('cd-away-flag').textContent=flag(awayName(next.g));
   document.getElementById('cd-away-name').textContent=awayName(next.g);
 
-  // Restore timer markup (in case it was replaced by live badge before)
+  // Restore timer markup (in case it was replaced before)
   document.getElementById('cd-timer').innerHTML=`
     <div class="countdown-unit"><span class="countdown-num" id="cd-days">00</span><span class="countdown-uns">DÍAS</span></div>
     <div class="countdown-sep">:</div>
