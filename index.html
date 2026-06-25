@@ -72,6 +72,8 @@ nav button{
 }
 nav button:hover{color:var(--text);}
 nav button.active{color:var(--green);border-bottom-color:var(--green);}
+#bottom-nav{display:none;}
+.more-menu-backdrop{display:none;}
 
 /* ── HERO STRIP ── */
 #hero-strip{
@@ -686,8 +688,7 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
 .bracket-status-def{background:rgba(82,176,67,0.18);color:var(--green);border:1px solid rgba(82,176,67,0.3);}
 .bracket-status-pend{background:rgba(240,165,0,0.1);color:var(--amber);border:1px solid rgba(240,165,0,0.2);}
 
-/* ── BOTTOM NAV (hidden on desktop) ── */
-#bottom-nav{display:none;}
+/* ── BOTTOM NAV (hidden on desktop, shown via mobile media query) ── */
 .more-menu-backdrop{
   display:none;position:fixed;inset:0;z-index:260;
   background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);
