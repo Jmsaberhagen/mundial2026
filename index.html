@@ -592,24 +592,11 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
   .tile-time{font-size:0.62rem;}
   .status-badge{font-size:0.52rem;padding:1px 5px;}
 
-  /* ── Day tabs: compact horizontal scroll carousel, no wrap ── */
-  .day-tabs{
-    display:flex;flex-wrap:nowrap;gap:0.35rem;
-    overflow-x:auto;scroll-snap-type:x proximate;
-    scrollbar-width:none;
-    margin:0 -0.85rem 1rem;
-    padding:0 0.85rem 0.6rem;
-  }
-  .day-tabs::-webkit-scrollbar{display:none;}
-  .day-tab{
-    scroll-snap-align:start;flex-shrink:0;
-    flex-direction:row;align-items:center;gap:4px;
-    padding:0.4rem 0.65rem;min-width:auto;
-    border-radius:8px;
-  }
-  .day-tab-name{font-size:0.7rem;}
-  .day-tab-count{font-size:0.58rem;}
-  .day-tab-count::before{content:'·';margin-right:2px;opacity:0.6;}
+  /* ── Date selector (replaces old day-tabs carousel) ── */
+  .date-nav{gap:0.4rem;}
+  .date-nav-btn{width:38px;height:38px;font-size:1rem;}
+  .date-select-wrap select{font-size:0.85rem;padding:0.55rem 2rem 0.55rem 0.85rem;}
+  .date-nav-today-badge{font-size:0.6rem;padding:2px 7px;}
 
   /* ── Section headers / PDF button ── */
   .tab-header-row{gap:0.5rem;}
@@ -661,26 +648,42 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
 }
 
 
-/* ── DAY TABS ── */
-.day-tabs{
-  display:flex;gap:0.4rem;flex-wrap:wrap;
-  margin-bottom:1.25rem;
-  padding-bottom:0.75rem;
+/* ── DATE SELECTOR (replaces old day-tabs carousel) ── */
+.date-nav{
+  display:flex;align-items:center;gap:0.6rem;
+  margin-bottom:1.25rem;padding-bottom:1rem;
   border-bottom:1px solid var(--border);
 }
-.day-tab{
-  background:var(--ink3);border:1px solid var(--border);
-  border-radius:var(--r);color:var(--muted);cursor:pointer;
-  font-family:'Inter',sans-serif;font-size:0.8rem;font-weight:500;
-  padding:0.45rem 0.9rem;
-  display:flex;flex-direction:column;align-items:center;gap:1px;
-  transition:all 0.15s;white-space:nowrap;
+.date-nav-btn{
+  width:42px;height:42px;flex-shrink:0;
+  background:var(--ink3);border:1px solid var(--border);border-radius:var(--r);
+  color:var(--text);cursor:pointer;font-size:1.1rem;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.15s;
 }
-.day-tab:hover{border-color:var(--border2);color:var(--text);}
-.day-tab.active{background:var(--green-dk);border-color:var(--green);color:#fff;}
-.day-tab-name{font-weight:600;font-size:0.82rem;}
-.day-tab-count{font-size:0.68rem;opacity:0.8;display:flex;align-items:center;gap:3px;}
-.day-live-dot{width:5px;height:5px;border-radius:50%;background:#fff;animation:pulse 1.2s ease infinite;display:inline-block;}
+.date-nav-btn:hover:not(:disabled){border-color:var(--green);color:var(--green);background:var(--green-bg);}
+.date-nav-btn:disabled{opacity:0.3;cursor:not-allowed;}
+.date-select-wrap{flex:1;position:relative;}
+.date-select-wrap select{
+  width:100%;background:var(--ink3);border:1px solid var(--border);border-radius:var(--r);
+  color:var(--text);font-family:'Inter',sans-serif;font-weight:600;font-size:0.9rem;
+  padding:0.65rem 2.25rem 0.65rem 1rem;
+  outline:none;cursor:pointer;appearance:none;-webkit-appearance:none;
+  transition:border-color 0.15s;
+}
+.date-select-wrap select:focus{border-color:var(--green);}
+.date-select-wrap::after{
+  content:'▾';position:absolute;right:1rem;top:50%;transform:translateY(-50%);
+  color:var(--muted);pointer-events:none;font-size:0.85rem;
+}
+.date-nav-today-badge{
+  display:inline-flex;align-items:center;gap:4px;flex-shrink:0;
+  background:var(--green-bg);border:1px solid rgba(82,176,67,0.3);color:var(--green);
+  border-radius:20px;padding:4px 10px;font-size:0.68rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.04em;cursor:pointer;
+  transition:all 0.15s;
+}
+.date-nav-today-badge:hover{background:rgba(82,176,67,0.2);}
 
 /* ── TERCEROS ── */
 .thirds-legend{display:flex;gap:1.25rem;margin-bottom:1rem;font-size:0.75rem;color:var(--muted);}
@@ -1228,6 +1231,10 @@ function renderFixture(){
   document.getElementById('fixture-list').innerHTML=html;
 }
 
+let dayBucketsCache={};
+let sortedDayKeysCache=[];
+let currentDayKey='';
+
 function renderByDay(games){
   const now=new Date();
   // Build day buckets
@@ -1242,43 +1249,36 @@ function renderByDay(games){
   const sortedKeys=Object.keys(buckets).filter(k=>k!=='Sin fecha').sort();
   if(buckets['Sin fecha'])sortedKeys.push('Sin fecha');
 
-  // Day tabs
   const todayStr=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
-  
-  // Find which tab to show by default: today if exists, else first with live/upcoming
   let defaultDay=sortedKeys.find(k=>k===todayStr)||sortedKeys[0]||'';
 
-  const dayNames={};
-  sortedKeys.forEach(k=>{
-    if(k==='Sin fecha'){dayNames[k]='Sin fecha';return;}
-    const d=new Date(k+'T12:00:00');
-    const diff=Math.round((new Date(k+'T12:00:00')-new Date(todayStr+'T12:00:00'))/(86400000));
-    if(diff===0)dayNames[k]='Hoy';
-    else if(diff===1)dayNames[k]='Mañana';
-    else if(diff===-1)dayNames[k]='Ayer';
-    else dayNames[k]=d.toLocaleDateString('es-AR',{weekday:'short',day:'numeric',month:'short'});
-  });
+  dayBucketsCache=buckets;
+  sortedDayKeysCache=sortedKeys;
+  currentDayKey=defaultDay;
 
-  // Count live in today
-  const liveToday=(buckets[todayStr]||[]).filter(g=>gameStatus(g)==='live').length;
+  const dayNames=buildDayNames(sortedKeys,todayStr);
 
-  let tabsHtml='<div class="day-tabs" id="day-tabs">';
+  // ── Date navigator: ◀ [dropdown] ▶  [Hoy badge] ──
+  let navHtml=`<div class="date-nav">
+    <button class="date-nav-btn" id="date-nav-prev" onclick="navigateDay(-1)" title="Día anterior">‹</button>
+    <div class="date-select-wrap">
+      <select id="date-nav-select" onchange="switchDay(this.value)">`;
   sortedKeys.forEach(k=>{
     const live=(buckets[k]||[]).filter(g=>gameStatus(g)==='live').length;
-    const isToday=k===todayStr;
-    tabsHtml+=`<button class="day-tab${k===defaultDay?' active':''}" onclick="switchDay('${k}')" data-day="${k}">
-      <span class="day-tab-name">${dayNames[k]}</span>
-      <span class="day-tab-count">${buckets[k].length}${live>0?` <span class="day-live-dot"></span>`:''}`;
-    tabsHtml+=`</span></button>`;
+    const liveMarker=live>0?' 🔴':'';
+    navHtml+=`<option value="${k}"${k===defaultDay?' selected':''}>${dayNames[k]} — ${buckets[k].length} partido${buckets[k].length===1?'':'s'}${liveMarker}</option>`;
   });
-  tabsHtml+='</div>';
+  navHtml+=`</select>
+    </div>
+    <button class="date-nav-btn" id="date-nav-next" onclick="navigateDay(1)" title="Día siguiente">›</button>
+    ${sortedKeys.includes(todayStr)?`<button class="date-nav-today-badge" onclick="switchDay('${todayStr}')">Hoy</button>`:''}
+  </div>`;
 
   let contentHtml='<div id="day-content">';
   sortedKeys.forEach(k=>{
     const dayGames=buckets[k];
     const display=k===defaultDay?'block':'none';
     contentHtml+=`<div class="day-panel" id="day-${k}" style="display:${display};">`;
-    // Group within day by group
     const grped={};
     dayGames.forEach(g=>{
       const key=g.group?`Grupo ${g.group}`:(g.type||'—');
@@ -1294,37 +1294,50 @@ function renderByDay(games){
   });
   contentHtml+='</div>';
 
-  document.getElementById('fixture-list').innerHTML=tabsHtml+contentHtml;
+  document.getElementById('fixture-list').innerHTML=navHtml+contentHtml;
+  updateDayNavButtons();
+}
 
-  // Auto-scroll the day-tabs carousel so the active day (usually "Hoy") is visible
-  requestAnimationFrame(()=>{
-    const activeTab=document.querySelector('.day-tab.active');
-    const tabsContainer=document.getElementById('day-tabs');
-    if(activeTab && tabsContainer){
-      const containerWidth=tabsContainer.offsetWidth;
-      const tabLeft=activeTab.offsetLeft;
-      const tabWidth=activeTab.offsetWidth;
-      tabsContainer.scrollLeft=tabLeft-(containerWidth/2)+(tabWidth/2);
-    }
+function buildDayNames(sortedKeys,todayStr){
+  const dayNames={};
+  sortedKeys.forEach(k=>{
+    if(k==='Sin fecha'){dayNames[k]='Sin fecha';return;}
+    const d=new Date(k+'T12:00:00');
+    const diff=Math.round((new Date(k+'T12:00:00')-new Date(todayStr+'T12:00:00'))/(86400000));
+    if(diff===0)dayNames[k]='Hoy';
+    else if(diff===1)dayNames[k]='Mañana';
+    else if(diff===-1)dayNames[k]='Ayer';
+    else dayNames[k]=d.toLocaleDateString('es-AR',{weekday:'short',day:'numeric',month:'short'});
   });
+  return dayNames;
 }
 
 function switchDay(dayKey){
-  document.querySelectorAll('.day-tab').forEach(b=>b.classList.remove('active'));
   document.querySelectorAll('.day-panel').forEach(p=>p.style.display='none');
-  const btn=document.querySelector(`.day-tab[data-day="${dayKey}"]`);
   const panel=document.getElementById(`day-${dayKey}`);
-  if(btn)btn.classList.add('active');
   if(panel)panel.style.display='block';
-  if(btn){
-    const tabsContainer=document.getElementById('day-tabs');
-    if(tabsContainer){
-      const containerWidth=tabsContainer.offsetWidth;
-      const tabLeft=btn.offsetLeft;
-      const tabWidth=btn.offsetWidth;
-      tabsContainer.scrollTo({left:tabLeft-(containerWidth/2)+(tabWidth/2),behavior:'smooth'});
-    }
+  currentDayKey=dayKey;
+  const sel=document.getElementById('date-nav-select');
+  if(sel)sel.value=dayKey;
+  updateDayNavButtons();
+  // Scroll fixture content into view smoothly
+  document.getElementById('day-content')?.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function navigateDay(delta){
+  const idx=sortedDayKeysCache.indexOf(currentDayKey);
+  const newIdx=idx+delta;
+  if(newIdx>=0 && newIdx<sortedDayKeysCache.length){
+    switchDay(sortedDayKeysCache[newIdx]);
   }
+}
+
+function updateDayNavButtons(){
+  const idx=sortedDayKeysCache.indexOf(currentDayKey);
+  const prevBtn=document.getElementById('date-nav-prev');
+  const nextBtn=document.getElementById('date-nav-next');
+  if(prevBtn)prevBtn.disabled=(idx<=0);
+  if(nextBtn)nextBtn.disabled=(idx>=sortedDayKeysCache.length-1 || idx===-1);
 }
 
 function matchTileHtml(g){
