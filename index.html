@@ -96,6 +96,43 @@ nav button.active{color:var(--green);border-bottom-color:var(--green);}
 .hstat-val.amber{color:var(--amber);}
 .hstat-lbl{font-size:0.62rem;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:var(--muted2);}
 
+/* ── COUNTDOWN BANNER ── */
+.countdown-banner{
+  background:linear-gradient(135deg,rgba(82,176,67,0.1) 0%,var(--ink2) 70%);
+  border-bottom:1px solid var(--border);
+  padding:0.85rem 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1.25rem;flex-wrap:wrap;
+}
+.countdown-banner.is-live{
+  background:linear-gradient(135deg,rgba(224,59,59,0.12) 0%,var(--ink2) 70%);
+}
+.countdown-content{display:flex;flex-direction:column;gap:3px;min-width:0;}
+.countdown-label{
+  font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--green);
+}
+.countdown-banner.is-live .countdown-label{color:var(--red);}
+.countdown-match{display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;}
+.countdown-flag{font-size:1.2rem;line-height:1;}
+.countdown-team{font-family:'Barlow Condensed',sans-serif;font-size:1.05rem;font-weight:700;}
+.countdown-vs{font-size:0.72rem;color:var(--muted);font-weight:500;}
+.countdown-timer{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.countdown-unit{display:flex;flex-direction:column;align-items:center;min-width:38px;}
+.countdown-num{
+  font-family:'Barlow Condensed',sans-serif;font-size:1.5rem;font-weight:800;
+  color:var(--text);line-height:1;
+  background:var(--ink3);border:1px solid var(--border2);border-radius:7px;
+  padding:4px 6px;min-width:36px;text-align:center;
+}
+.countdown-uns{font-size:0.55rem;color:var(--muted2);font-weight:700;letter-spacing:0.07em;margin-top:2px;}
+.countdown-sep{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;color:var(--muted2);}
+.countdown-live-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:800;
+  color:var(--red);text-transform:uppercase;letter-spacing:0.04em;
+}
+
 /* ── MAIN ── */
 main{padding:1.5rem;max-width:1100px;margin:0 auto;}
 .tab-panel{display:none;animation:fadeIn 0.2s ease;}
@@ -232,6 +269,14 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
   color:var(--green);
 }
 .grupo-subtitle{font-size:0.68rem;color:var(--muted2);font-weight:500;}
+
+.grupo-alert{
+  font-size:0.7rem;font-weight:600;line-height:1.4;
+  padding:0.55rem 1rem;border-bottom:1px solid var(--border);
+}
+.grupo-alert-live{background:rgba(224,59,59,0.12);color:var(--red);}
+.grupo-alert-today{background:rgba(240,165,0,0.12);color:var(--amber);}
+.grupo-alert-soon{background:rgba(82,176,67,0.08);color:var(--green-lt,var(--green));}
 
 .grupo-table{width:100%;border-collapse:collapse;}
 .grupo-table th{
@@ -502,6 +547,18 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
   .hstat-lbl{font-size:0.56rem;}
 
   main{padding:0.85rem;padding-bottom:1.5rem;}
+
+  /* ── Countdown banner mobile ── */
+  .countdown-banner{padding:0.7rem 0.85rem;gap:0.6rem;}
+  .countdown-label{font-size:0.56rem;}
+  .countdown-team{font-size:0.85rem;}
+  .countdown-flag{font-size:1rem;}
+  .countdown-vs{font-size:0.62rem;}
+  .countdown-num{font-size:1.1rem;min-width:28px;padding:3px 4px;}
+  .countdown-uns{font-size:0.48rem;}
+  .countdown-sep{font-size:1rem;}
+  .countdown-unit{min-width:30px;}
+  .countdown-timer{gap:3px;}
 
   /* ── Bottom nav: fixed, app-like, 6 icons ── */
   #bottom-nav{
@@ -794,6 +851,29 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
   <div class="hstat"><span class="hstat-val green" id="hs-live">—</span><span class="hstat-lbl">En vivo</span></div>
 </div>
 
+<!-- COUNTDOWN BANNER -->
+<div id="countdown-banner" class="countdown-banner" style="display:none;">
+  <div class="countdown-content">
+    <div class="countdown-label">⏱ Próximo partido</div>
+    <div class="countdown-match">
+      <span class="countdown-flag" id="cd-home-flag"></span>
+      <span class="countdown-team" id="cd-home-name"></span>
+      <span class="countdown-vs">vs</span>
+      <span class="countdown-team" id="cd-away-name"></span>
+      <span class="countdown-flag" id="cd-away-flag"></span>
+    </div>
+  </div>
+  <div class="countdown-timer" id="cd-timer">
+    <div class="countdown-unit"><span class="countdown-num" id="cd-days">00</span><span class="countdown-uns">DÍAS</span></div>
+    <div class="countdown-sep">:</div>
+    <div class="countdown-unit"><span class="countdown-num" id="cd-hours">00</span><span class="countdown-uns">HS</span></div>
+    <div class="countdown-sep">:</div>
+    <div class="countdown-unit"><span class="countdown-num" id="cd-mins">00</span><span class="countdown-uns">MIN</span></div>
+    <div class="countdown-sep">:</div>
+    <div class="countdown-unit"><span class="countdown-num" id="cd-secs">00</span><span class="countdown-uns">SEG</span></div>
+  </div>
+</div>
+
 <main>
   <!-- FIXTURE -->
   <div id="tab-fixture" class="tab-panel active">
@@ -977,6 +1057,7 @@ async function loadAll(){
     groups.forEach(gr=>{gsel.innerHTML+=`<option value="${gr}">Grupo ${gr}</option>`;});
     populateSimSelects();
     updateHeroStrip();
+    updateCountdownBanner();
     renderFixture();renderGrupos();renderTerceros();renderBracket();renderStats();renderGoleadores();
   }catch(e){
     console.error(e);
@@ -998,6 +1079,108 @@ function updateHeroStrip(){
   document.getElementById('hs-equipos').textContent=Object.keys(teamsById).length||48;
   document.getElementById('hs-live').textContent=live.length;
   document.getElementById('live-count-pill').textContent=live.length>0?`${live.length} en vivo`:'datos cargados';
+}
+
+// ── COUNTDOWN BANNER ───────────────────────────────────────────────────────
+let countdownInterval=null;
+let countdownTargetGame=null;
+
+function getArgentinaNow(){
+  // Current time, treated as Argentina (UTC-3) reference for comparison purposes.
+  // parseLocalDate() already converts API's CDT timestamps into a correct UTC ISO string,
+  // so comparing against the real "now" (also UTC-based via Date) is consistent.
+  return new Date();
+}
+
+function findNextUpcomingGame(){
+  const now=getArgentinaNow();
+  const upcoming=allGames
+    .filter(g=>gameStatus(g)==='upcoming')
+    .map(g=>({g,date:new Date(parseLocalDate(g.local_date))}))
+    .filter(x=>!isNaN(x.date) && x.date>now)
+    .sort((a,b)=>a.date-b.date);
+  return upcoming.length?upcoming[0]:null;
+}
+
+function findCurrentLiveGame(){
+  const live=allGames.filter(g=>gameStatus(g)==='live');
+  return live.length?live[0]:null;
+}
+
+function updateCountdownBanner(){
+  const banner=document.getElementById('countdown-banner');
+
+  // Priority: if something is live right now, show that instead of a countdown
+  const liveGame=findCurrentLiveGame();
+  if(liveGame){
+    banner.style.display='flex';
+    banner.classList.add('is-live');
+    document.getElementById('cd-home-flag').textContent=flag(homeName(liveGame));
+    document.getElementById('cd-home-name').textContent=homeName(liveGame);
+    document.getElementById('cd-away-flag').textContent=flag(awayName(liveGame));
+    document.getElementById('cd-away-name').textContent=awayName(liveGame);
+    document.querySelector('.countdown-label').textContent='🔴 Jugándose ahora';
+    document.getElementById('cd-timer').innerHTML='<span class="countdown-live-badge"><span class="live-dot"></span>EN VIVO</span>';
+    if(countdownInterval){clearInterval(countdownInterval);countdownInterval=null;}
+    return;
+  }
+
+  const next=findNextUpcomingGame();
+  if(!next){
+    banner.style.display='none';
+    if(countdownInterval){clearInterval(countdownInterval);countdownInterval=null;}
+    return;
+  }
+
+  countdownTargetGame=next;
+  banner.style.display='flex';
+  banner.classList.remove('is-live');
+  document.querySelector('.countdown-label').textContent='⏱ Próximo partido (hora ARG)';
+  document.getElementById('cd-home-flag').textContent=flag(homeName(next.g));
+  document.getElementById('cd-home-name').textContent=homeName(next.g);
+  document.getElementById('cd-away-flag').textContent=flag(awayName(next.g));
+  document.getElementById('cd-away-name').textContent=awayName(next.g);
+
+  // Restore timer markup (in case it was replaced by live badge before)
+  document.getElementById('cd-timer').innerHTML=`
+    <div class="countdown-unit"><span class="countdown-num" id="cd-days">00</span><span class="countdown-uns">DÍAS</span></div>
+    <div class="countdown-sep">:</div>
+    <div class="countdown-unit"><span class="countdown-num" id="cd-hours">00</span><span class="countdown-uns">HS</span></div>
+    <div class="countdown-sep">:</div>
+    <div class="countdown-unit"><span class="countdown-num" id="cd-mins">00</span><span class="countdown-uns">MIN</span></div>
+    <div class="countdown-sep">:</div>
+    <div class="countdown-unit"><span class="countdown-num" id="cd-secs">00</span><span class="countdown-uns">SEG</span></div>`;
+
+  if(countdownInterval)clearInterval(countdownInterval);
+  tickCountdown();
+  countdownInterval=setInterval(tickCountdown,1000);
+}
+
+function tickCountdown(){
+  if(!countdownTargetGame)return;
+  const now=new Date();
+  const target=countdownTargetGame.date;
+  let diff=target-now;
+
+  if(diff<=0){
+    // Match should have started — refresh full state (it may now be live or finished)
+    updateHeroStrip();
+    updateCountdownBanner();
+    return;
+  }
+
+  const days=Math.floor(diff/86400000);diff-=days*86400000;
+  const hours=Math.floor(diff/3600000);diff-=hours*3600000;
+  const mins=Math.floor(diff/60000);diff-=mins*60000;
+  const secs=Math.floor(diff/1000);
+
+  const dEl=document.getElementById('cd-days');
+  if(dEl){
+    dEl.textContent=String(days).padStart(2,'0');
+    document.getElementById('cd-hours').textContent=String(hours).padStart(2,'0');
+    document.getElementById('cd-mins').textContent=String(mins).padStart(2,'0');
+    document.getElementById('cd-secs').textContent=String(secs).padStart(2,'0');
+  }
 }
 
 function renderFixture(){
@@ -1147,17 +1330,61 @@ function matchTileHtml(g){
   </div>`;
 }
 
+function getGroupClosingAlert(groupName){
+  // Returns null if not relevant, or {type:'today'|'soon', game, hoursLeft} if the group's
+  // last pending matches are about to be played soon (within next 26h) or today (ARG time).
+  if(isGroupComplete(groupName))return null;
+  const groupGames=allGames.filter(g=>g.group===groupName);
+  const pending=groupGames
+    .filter(g=>gameStatus(g)!=='finished')
+    .map(g=>({g,date:new Date(parseLocalDate(g.local_date))}))
+    .filter(x=>!isNaN(x.date))
+    .sort((a,b)=>a.date-b.date);
+  if(!pending.length)return null;
+
+  const now=new Date();
+  const next=pending[0];
+  const diffH=(next.date-now)/3600000;
+
+  // Live right now
+  if(gameStatus(next.g)==='live')return{type:'live',game:next.g};
+
+  // Within next 26 hours (covers "today" + a margin for late kickoffs in ARG time)
+  if(diffH>=0 && diffH<=26){
+    const argDate=next.date;
+    const todayArg=new Date();
+    const isToday=argDate.toDateString()===todayArg.toDateString() ||
+      (diffH<=26 && diffH>=0);
+    return{type:isToday&&diffH<=18?'today':'soon',game:next.g,hoursLeft:diffH};
+  }
+  return null;
+}
+
 function renderGrupos(){
   if(!allGroups.length){document.getElementById('grupos-list').innerHTML='<div class="empty-tile">Sin datos de posiciones.</div>';return;}
   const sorted=allGroups.slice().sort((a,b)=>(a.name||'').localeCompare(b.name||''));
   let html='<div class="grupos-grid">';
   sorted.forEach(g=>{
     const teams=(g.teams||[]).slice().sort((a,b)=>{const pd=parseInt(b.pts)-parseInt(a.pts);if(pd!==0)return pd;return parseInt(b.gd)-parseInt(a.gd);});
+    const alert=getGroupClosingAlert(g.name);
+
+    let alertHtml='';
+    if(alert){
+      if(alert.type==='live'){
+        alertHtml=`<div class="grupo-alert grupo-alert-live">🔴 Definiendo posiciones ahora: ${flag(homeName(alert.game))} ${homeName(alert.game)} vs ${awayName(alert.game)} ${flag(awayName(alert.game))}</div>`;
+      } else if(alert.type==='today'){
+        alertHtml=`<div class="grupo-alert grupo-alert-today">⚠️ Cierra hoy · ${flag(homeName(alert.game))} vs ${flag(awayName(alert.game))} a las ${fmtDate(alert.game.local_date).split(' ')[1]||''}</div>`;
+      } else {
+        alertHtml=`<div class="grupo-alert grupo-alert-soon">⏳ Cierra pronto · próximo partido en ${Math.round(alert.hoursLeft)}h</div>`;
+      }
+    }
+
     html+=`<div class="grupo-card">
       <div class="grupo-head">
         <span class="grupo-name">Grupo ${g.name}</span>
         <span class="grupo-subtitle">${teams.length} equipos</span>
       </div>
+      ${alertHtml}
       <table class="grupo-table">
         <tr><th>Equipo</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>GD</th><th>Pts</th></tr>`;
     teams.forEach((t,i)=>{
