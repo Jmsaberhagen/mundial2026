@@ -466,16 +466,134 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
 .error-tile code{background:rgba(0,0,0,0.3);padding:2px 6px;border-radius:4px;}
 .empty-tile{text-align:center;padding:3rem;color:var(--muted);font-size:0.85rem;}
 
+/* ════════════════════════════════════════════════════════════════════════
+   MOBILE REDESIGN — bottom nav app-like, collapsed header, touch targets
+   ════════════════════════════════════════════════════════════════════════ */
 @media(max-width:640px){
-  main{padding:1rem;}
-  .match-tile{grid-template-columns:1fr 110px 1fr;}
-  .tile-score{font-size:1.3rem;}
-  .tile-name{font-size:0.85rem;}
-  .grupos-grid{grid-template-columns:1fr;}
-  .kpi-grid{grid-template-columns:repeat(3,1fr);}
-  .sim-teams-row{grid-template-columns:1fr 40px 1fr;}
-  .sim-vs{font-size:0.8rem;}
+  html{-webkit-text-size-adjust:100%;}
+  body{padding-bottom:62px;} /* space for fixed bottom nav */
+
+  /* ── Top bar: logo + live pill only, nav moves to bottom ── */
+  #topbar{
+    height:48px;padding:0 0.85rem;
+    border-bottom:1px solid var(--border);
+  }
+  #topbar nav{display:none;} /* hide top nav, replaced by bottom nav */
+  .logo-icon{width:26px;height:26px;font-size:14px;border-radius:5px;}
+  .logo-text{font-size:0.95rem;}
+  .live-pill{font-size:0.6rem;padding:3px 7px;}
+  .live-pill span:not(.live-dot){display:none;} /* hide text, keep dot */
+  .live-pill{padding:5px;border-radius:50%;width:20px;height:20px;justify-content:center;}
+
+  /* ── Hero strip: horizontal scroll, smaller, snap ── */
+  #hero-strip{
+    height:auto;padding:0.6rem 0.85rem;
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:0.5rem;overflow:visible;
+  }
+  .hstat{
+    border-right:none;padding:0.4rem 0.2rem;
+    background:var(--ink3);border-radius:8px;
+    flex-shrink:1;
+  }
+  .hstat-val{font-size:1.15rem;}
+  .hstat-lbl{font-size:0.56rem;}
+
+  main{padding:0.85rem;padding-bottom:1.5rem;}
+
+  /* ── Bottom nav: fixed, app-like, 6 icons ── */
+  #bottom-nav{
+    display:flex;position:fixed;bottom:0;left:0;right:0;z-index:250;
+    background:rgba(13,13,15,0.97);backdrop-filter:blur(20px);
+    border-top:1px solid var(--border2);
+    padding:4px 2px calc(4px + env(safe-area-inset-bottom,0px));
+    justify-content:space-between;
+  }
+  .bottom-nav-btn{
+    flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;
+    background:none;border:none;color:var(--muted);cursor:pointer;
+    padding:6px 2px;border-radius:8px;transition:color 0.15s,background 0.15s;
+    min-width:0;
+  }
+  .bottom-nav-btn.active{color:var(--green);background:rgba(82,176,67,0.08);}
+  .bottom-nav-icon{font-size:1.1rem;line-height:1;}
+  .bottom-nav-label{font-size:0.56rem;font-weight:600;letter-spacing:0.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+
+  /* ── Filters: stack, full width, bigger touch targets ── */
+  .filters{flex-direction:column;gap:0.5rem;}
+  .filters input,.filters select{width:100%;padding:0.65rem 0.85rem;font-size:0.85rem;}
+
+  /* ── Match tiles: tighter ── */
+  .match-tile{grid-template-columns:1fr 92px 1fr;border-radius:10px;}
+  .tile-team{padding:0.7rem 0.6rem 0.7rem 0.85rem;gap:0.5rem;}
+  .tile-team.away{padding:0.7rem 0.85rem 0.7rem 0.6rem;}
+  .tile-flag{font-size:1.25rem;}
+  .tile-score{font-size:1.15rem;}
+  .tile-name{font-size:0.78rem;}
+  .tile-time{font-size:0.62rem;}
+  .status-badge{font-size:0.52rem;padding:1px 5px;}
+
+  /* ── Day tabs: bigger touch targets, horizontal scroll with snap ── */
+  .day-tabs{
+    gap:0.4rem;scroll-snap-type:x proximate;
+    margin-left:-0.85rem;margin-right:-0.85rem;
+    padding-left:0.85rem;padding-right:0.85rem;
+  }
+  .day-tab{
+    scroll-snap-align:start;padding:0.5rem 0.7rem;min-width:64px;
+  }
+  .day-tab-name{font-size:0.74rem;}
+  .day-tab-count{font-size:0.6rem;}
+
+  /* ── Section headers / PDF button ── */
+  .tab-header-row{gap:0.5rem;}
+  .tab-header-row .sec-label{font-size:0.62rem;}
+  .btn-pdf{font-size:0.68rem;padding:0.45rem 0.65rem;}
+  .btn-pdf .btn-pdf-text{display:none;} /* icon only on mobile */
+
+  /* ── Grupos ── */
+  .grupos-grid{grid-template-columns:1fr;gap:0.75rem;}
+  .grupo-table th,.grupo-table td{padding:0.45rem 0.35rem;font-size:0.72rem;}
+  .grupo-table th:first-child,.grupo-table td:first-child{padding-left:0.6rem;}
+
+  /* ── KPI / Stats ── */
+  .kpi-grid{grid-template-columns:repeat(3,1fr);gap:0.5rem;}
+  .kpi-card{padding:0.75rem 0.4rem;}
+  .kpi-val{font-size:1.5rem;}
+  .topgame-row{flex-wrap:wrap;gap:0.5rem;}
+  .topgame-teams{font-size:0.78rem;width:100%;order:1;}
+  .goals-bar-wrap{order:2;width:auto;flex:1;}
+  .topgame-goals{order:3;font-size:1.1rem;}
+
+  /* ── Terceros / Bracket ── */
+  .thirds-table{font-size:0.68rem;}
+  .thirds-table th,.thirds-table td{padding:0.4rem 0.3rem;}
+  .bracket-grid{grid-template-columns:1fr;gap:0.65rem;}
+
+  /* ── Goleadores ── */
+  .scorer-tile{padding:0.6rem 0.75rem;gap:0.6rem;}
+  .sc-name{font-size:0.84rem;}
+
+  /* ── Simulador ── */
+  .sim-teams-row{grid-template-columns:1fr 36px 1fr;gap:0.5rem;}
+  .sim-vs{font-size:0.75rem;}
+  .sim-eflag{font-size:1.8rem;min-height:2.2rem;}
+  .sim-controls{gap:0.6rem;}
+  .sim-result-score{font-size:2.4rem;}
+  .sim-probs{gap:0.4rem;}
+
+  /* ── Modal: nearly full screen on mobile ── */
+  .modal{max-width:100%;width:100%;max-height:92vh;border-radius:16px 16px 0 0;}
+  .modal-backdrop{align-items:flex-end;padding:0;}
+  .modal-backdrop.open{align-items:flex-end;}
 }
+
+@media(max-width:380px){
+  .hstat-val{font-size:1rem;}
+  .bottom-nav-label{font-size:0.52rem;}
+  .tile-name{font-size:0.72rem;}
+}
+
 
 /* ── DAY TABS ── */
 .day-tabs{
@@ -568,6 +686,32 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
 .bracket-status-def{background:rgba(82,176,67,0.18);color:var(--green);border:1px solid rgba(82,176,67,0.3);}
 .bracket-status-pend{background:rgba(240,165,0,0.1);color:var(--amber);border:1px solid rgba(240,165,0,0.2);}
 
+/* ── BOTTOM NAV (hidden on desktop) ── */
+#bottom-nav{display:none;}
+.more-menu-backdrop{
+  display:none;position:fixed;inset:0;z-index:260;
+  background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);
+  align-items:flex-end;justify-content:center;
+}
+.more-menu-backdrop.open{display:flex;animation:fadeIn 0.15s ease;}
+.more-menu-sheet{
+  background:var(--ink2);border:1px solid var(--border2);border-top:none;
+  border-radius:16px 16px 0 0;width:100%;max-width:640px;
+  padding:0.5rem 0 calc(0.75rem + env(safe-area-inset-bottom,0px));
+  box-shadow:0 -8px 30px rgba(0,0,0,0.5);
+}
+.more-menu-handle{width:36px;height:4px;background:var(--ink4);border-radius:2px;margin:0.6rem auto 0.5rem;}
+.more-menu-item{
+  display:flex;align-items:center;gap:0.75rem;width:100%;
+  background:none;border:none;color:var(--text);cursor:pointer;
+  font-family:'Inter',sans-serif;font-size:0.95rem;font-weight:500;
+  padding:0.9rem 1.25rem;text-align:left;
+  transition:background 0.15s;
+}
+.more-menu-item:active{background:var(--ink3);}
+.more-menu-item.active{color:var(--green);}
+.btn-pdf-text{display:inline;}
+
 /* ── DOWNLOAD PDF BUTTON ── */
 .tab-header-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;}
 .tab-header-row .sec-label{margin-bottom:0;flex:1;}
@@ -604,6 +748,42 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
   <div class="live-pill"><span class="live-dot"></span><span id="live-count-pill">cargando…</span></div>
 </div>
 
+<!-- BOTTOM NAV (mobile only, mirrors top nav) -->
+<nav id="bottom-nav">
+  <button class="bottom-nav-btn active" data-tab="fixture" onclick="showTabMobile('fixture',this)">
+    <span class="bottom-nav-icon">📅</span><span class="bottom-nav-label">Fixture</span>
+  </button>
+  <button class="bottom-nav-btn" data-tab="grupos" onclick="showTabMobile('grupos',this)">
+    <span class="bottom-nav-icon">📊</span><span class="bottom-nav-label">Grupos</span>
+  </button>
+  <button class="bottom-nav-btn" data-tab="bracket" onclick="showTabMobile('bracket',this)">
+    <span class="bottom-nav-icon">🏆</span><span class="bottom-nav-label">16avos</span>
+  </button>
+  <button class="bottom-nav-btn" data-tab="goleadores" onclick="showTabMobile('goleadores',this)">
+    <span class="bottom-nav-icon">⚽</span><span class="bottom-nav-label">Goles</span>
+  </button>
+  <button class="bottom-nav-btn" id="bottom-nav-more" onclick="toggleMoreMenu()">
+    <span class="bottom-nav-icon">⋯</span><span class="bottom-nav-label">Más</span>
+  </button>
+</nav>
+
+<!-- MORE MENU SHEET (mobile) -->
+<div id="more-menu-backdrop" class="more-menu-backdrop" onclick="closeMoreMenu(event)">
+  <div class="more-menu-sheet">
+    <div class="more-menu-handle"></div>
+    <button class="more-menu-item" data-tab="terceros" onclick="showTabMobile('terceros',this)">
+      <span class="bottom-nav-icon">🥉</span> Mejores terceros
+    </button>
+    <button class="more-menu-item" data-tab="stats" onclick="showTabMobile('stats',this)">
+      <span class="bottom-nav-icon">📈</span> Estadísticas
+    </button>
+    <button class="more-menu-item" data-tab="simulador" onclick="showTabMobile('simulador',this)">
+      <span class="bottom-nav-icon">🎲</span> Simulador
+    </button>
+  </div>
+</div>
+
+
 <div id="hero-strip">
   <div class="hstat"><span class="hstat-val" id="hs-jugados">—</span><span class="hstat-lbl">Jugados</span></div>
   <div class="hstat"><span class="hstat-val amber" id="hs-pendientes">—</span><span class="hstat-lbl">Pendientes</span></div>
@@ -618,7 +798,7 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
   <div id="tab-fixture" class="tab-panel active">
     <div class="tab-header-row">
       <div class="sec-label" style="margin-bottom:0;">Partidos del mundial</div>
-      <button class="btn-pdf" onclick="downloadFixturePDF(this)">⬇ Descargar PDF</button>
+      <button class="btn-pdf" onclick="downloadFixturePDF(this)">⬇<span class="btn-pdf-text"> Descargar PDF</span></button>
     </div>
     <div class="filters">
       <input type="text" id="filterTeam" placeholder="Buscar equipo…" oninput="renderFixture()">
@@ -639,7 +819,7 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
   <div id="tab-grupos" class="tab-panel">
     <div class="tab-header-row">
       <div class="sec-label" style="margin-bottom:0;">Posiciones por grupo</div>
-      <button class="btn-pdf" onclick="downloadGruposPDF(this)">⬇ Descargar PDF</button>
+      <button class="btn-pdf" onclick="downloadGruposPDF(this)">⬇<span class="btn-pdf-text"> Descargar PDF</span></button>
     </div>
     <div id="grupos-list"><div class="loader"><div class="spinner"></div>Cargando…</div></div>
   </div>
@@ -648,7 +828,7 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
   <div id="tab-terceros" class="tab-panel">
     <div class="tab-header-row">
       <div class="sec-label" style="margin-bottom:0;">Mejores terceros · clasifican 8 de 12 a dieciseisavos</div>
-      <button class="btn-pdf" onclick="downloadTercerosPDF(this)">⬇ Descargar PDF</button>
+      <button class="btn-pdf" onclick="downloadTercerosPDF(this)">⬇<span class="btn-pdf-text"> Descargar PDF</span></button>
     </div>
     <div class="thirds-legend">
       <span class="thirds-legend-item"><span class="thirds-dot q"></span>Clasifica directo</span>
@@ -661,7 +841,7 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
   <div id="tab-bracket" class="tab-panel">
     <div class="tab-header-row">
       <div class="sec-label" style="margin-bottom:0;">Cómo queda el cuadro de dieciseisavos</div>
-      <button class="btn-pdf" onclick="downloadBracketPDF(this)">⬇ Descargar PDF</button>
+      <button class="btn-pdf" onclick="downloadBracketPDF(this)">⬇<span class="btn-pdf-text"> Descargar PDF</span></button>
     </div>
     <div id="bracket-list"><div class="loader"><div class="spinner"></div>Armando el cuadro…</div></div>
   </div>
@@ -670,7 +850,7 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
   <div id="tab-stats" class="tab-panel">
     <div class="tab-header-row">
       <div class="sec-label" style="margin-bottom:0;">Resumen del torneo</div>
-      <button class="btn-pdf" onclick="downloadStatsPDF(this)">⬇ Descargar PDF</button>
+      <button class="btn-pdf" onclick="downloadStatsPDF(this)">⬇<span class="btn-pdf-text"> Descargar PDF</span></button>
     </div>
     <div class="kpi-grid" id="kpi-grid"></div>
     <div class="sec-label">Partidos con más goles</div>
@@ -681,7 +861,7 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
   <div id="tab-goleadores" class="tab-panel">
     <div class="tab-header-row">
       <div class="sec-label" style="margin-bottom:0;">Tabla de goleadores</div>
-      <button class="btn-pdf" onclick="downloadGoleadoresPDF(this)">⬇ Descargar PDF</button>
+      <button class="btn-pdf" onclick="downloadGoleadoresPDF(this)">⬇<span class="btn-pdf-text"> Descargar PDF</span></button>
     </div>
     <div style="background:var(--ink2);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;">
       <div class="scorers-list" id="scorers-list"></div>
@@ -1366,12 +1546,56 @@ function openMatchDetail(id){
   document.getElementById('modal-body').innerHTML=html;
 }
 function closeModal(){document.getElementById('match-modal').classList.remove('open');}
+const MOBILE_PRIMARY_TABS=['fixture','grupos','bracket','goleadores'];
+
 function showTab(name,btn){
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('#topbar nav button').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+name).classList.add('active');
   if(btn)btn.classList.add('active');
+  syncMobileNav(name);
 }
+
+function showTabMobile(name,el){
+  // Switch the actual tab panel
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  // Sync top nav active state too (in case user rotates to desktop width)
+  document.querySelectorAll('#topbar nav button').forEach(b=>b.classList.remove('active'));
+  const topBtn=Array.from(document.querySelectorAll('#topbar nav button')).find(b=>b.getAttribute('onclick')&&b.getAttribute('onclick').includes(`'${name}'`));
+  if(topBtn)topBtn.classList.add('active');
+  syncMobileNav(name);
+  closeMoreMenu();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function syncMobileNav(name){
+  // Highlight bottom nav icon if it's a primary tab
+  document.querySelectorAll('.bottom-nav-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.more-menu-item').forEach(b=>b.classList.remove('active'));
+  const moreBtn=document.getElementById('bottom-nav-more');
+
+  if(MOBILE_PRIMARY_TABS.includes(name)){
+    const btn=document.querySelector(`.bottom-nav-btn[data-tab="${name}"]`);
+    if(btn)btn.classList.add('active');
+    moreBtn.classList.remove('active');
+  } else {
+    // It's one of the "more" tabs (terceros, stats, simulador)
+    moreBtn.classList.add('active');
+    const item=document.querySelector(`.more-menu-item[data-tab="${name}"]`);
+    if(item)item.classList.add('active');
+  }
+}
+
+function toggleMoreMenu(){
+  const backdrop=document.getElementById('more-menu-backdrop');
+  backdrop.classList.toggle('open');
+}
+function closeMoreMenu(e){
+  const backdrop=document.getElementById('more-menu-backdrop');
+  if(!e || e.target===backdrop) backdrop.classList.remove('open');
+}
+
 document.getElementById('match-modal').addEventListener('click',e=>{if(e.target===document.getElementById('match-modal'))closeModal();});
 loadAll();
 
@@ -1441,8 +1665,14 @@ function checkPageBreak(doc, y, needed, addHeaderFn){
 
 function setBtnLoading(btn, loading){
   if(!btn)return;
-  if(loading){btn.classList.add('loading');btn.dataset.orig=btn.textContent;btn.textContent='Generando…';}
-  else{btn.classList.remove('loading');btn.textContent=btn.dataset.orig||'⬇ Descargar PDF';}
+  if(loading){
+    btn.dataset.orig=btn.innerHTML;
+    btn.classList.add('loading');
+    btn.innerHTML='⏳<span class="btn-pdf-text"> Generando…</span>';
+  } else {
+    btn.classList.remove('loading');
+    btn.innerHTML=btn.dataset.orig||'⬇<span class="btn-pdf-text"> Descargar PDF</span>';
+  }
 }
 
 // ── FIXTURE PDF ────────────────────────────────────────────────────────────
