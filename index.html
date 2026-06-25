@@ -592,17 +592,24 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
   .tile-time{font-size:0.62rem;}
   .status-badge{font-size:0.52rem;padding:1px 5px;}
 
-  /* ── Day tabs: bigger touch targets, horizontal scroll with snap ── */
+  /* ── Day tabs: compact horizontal scroll carousel, no wrap ── */
   .day-tabs{
-    gap:0.4rem;scroll-snap-type:x proximate;
-    margin-left:-0.85rem;margin-right:-0.85rem;
-    padding-left:0.85rem;padding-right:0.85rem;
+    display:flex;flex-wrap:nowrap;gap:0.35rem;
+    overflow-x:auto;scroll-snap-type:x proximate;
+    scrollbar-width:none;
+    margin:0 -0.85rem 1rem;
+    padding:0 0.85rem 0.6rem;
   }
+  .day-tabs::-webkit-scrollbar{display:none;}
   .day-tab{
-    scroll-snap-align:start;padding:0.5rem 0.7rem;min-width:64px;
+    scroll-snap-align:start;flex-shrink:0;
+    flex-direction:row;align-items:center;gap:4px;
+    padding:0.4rem 0.65rem;min-width:auto;
+    border-radius:8px;
   }
-  .day-tab-name{font-size:0.74rem;}
-  .day-tab-count{font-size:0.6rem;}
+  .day-tab-name{font-size:0.7rem;}
+  .day-tab-count{font-size:0.58rem;}
+  .day-tab-count::before{content:'·';margin-right:2px;opacity:0.6;}
 
   /* ── Section headers / PDF button ── */
   .tab-header-row{gap:0.5rem;}
@@ -1288,6 +1295,18 @@ function renderByDay(games){
   contentHtml+='</div>';
 
   document.getElementById('fixture-list').innerHTML=tabsHtml+contentHtml;
+
+  // Auto-scroll the day-tabs carousel so the active day (usually "Hoy") is visible
+  requestAnimationFrame(()=>{
+    const activeTab=document.querySelector('.day-tab.active');
+    const tabsContainer=document.getElementById('day-tabs');
+    if(activeTab && tabsContainer){
+      const containerWidth=tabsContainer.offsetWidth;
+      const tabLeft=activeTab.offsetLeft;
+      const tabWidth=activeTab.offsetWidth;
+      tabsContainer.scrollLeft=tabLeft-(containerWidth/2)+(tabWidth/2);
+    }
+  });
 }
 
 function switchDay(dayKey){
@@ -1297,6 +1316,15 @@ function switchDay(dayKey){
   const panel=document.getElementById(`day-${dayKey}`);
   if(btn)btn.classList.add('active');
   if(panel)panel.style.display='block';
+  if(btn){
+    const tabsContainer=document.getElementById('day-tabs');
+    if(tabsContainer){
+      const containerWidth=tabsContainer.offsetWidth;
+      const tabLeft=btn.offsetLeft;
+      const tabWidth=btn.offsetWidth;
+      tabsContainer.scrollTo({left:tabLeft-(containerWidth/2)+(tabWidth/2),behavior:'smooth'});
+    }
+  }
 }
 
 function matchTileHtml(g){
