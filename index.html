@@ -795,6 +795,84 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
 .bracket-status-def{background:rgba(82,176,67,0.18);color:var(--green);border:1px solid rgba(82,176,67,0.3);}
 .bracket-status-pend{background:rgba(240,165,0,0.1);color:var(--amber);border:1px solid rgba(240,165,0,0.2);}
 
+/* ── FASE FINAL (R16 → Final) — bracket tipo videojuego, copa al centro ── */
+#tab-final8{max-width:none;margin:0 -1.5rem;padding:0 1.5rem;}
+.f8-bracket-wrap{position:relative;}
+.f8-connectors{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;}
+.f8-connectors path{fill:none;stroke:var(--border2);stroke-width:1.5;stroke-linecap:round;}
+.f8-connectors path.f8-conn-done{stroke:rgba(82,176,67,0.45);}
+.f8-root{
+  position:relative;z-index:2;
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr minmax(150px,1.1fr) 1fr 1fr 1fr;
+  align-items:stretch;gap:clamp(10px,2vw,28px);
+  width:100%;
+}
+.f8-side{display:contents;}
+.f8-col{display:flex;flex-direction:column;gap:0.6rem;min-width:0;}
+.f8-col.f8-r16{justify-content:space-around;gap:0.5rem;height:100%;}
+.f8-col.f8-qf{justify-content:space-around;height:100%;}
+.f8-col.f8-sf{justify-content:center;height:100%;}
+.f8-col.f8-final-col{justify-content:center;height:100%;}
+
+.f8-card{
+  position:relative;width:100%;min-width:0;
+  background:var(--ink2);border:1px solid var(--border);border-radius:var(--r2);
+  padding:0.55rem 0.65rem;
+  transition:border-color 0.15s;
+}
+.f8-card:hover{border-color:var(--border2);}
+.f8-card.f8-definitive{border-color:rgba(82,176,67,0.35);background:linear-gradient(135deg,rgba(82,176,67,0.07),var(--ink2) 60%);}
+.f8-card.f8-live{border-color:rgba(224,59,59,0.4);}
+.f8-card-meta{font-size:0.58rem;color:var(--muted2);font-weight:700;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:0.4rem;display:flex;justify-content:space-between;gap:6px;white-space:nowrap;overflow:hidden;}
+.f8-card-meta span:last-child{overflow:hidden;text-overflow:ellipsis;}
+.f8-card-meta .f8-live-tag{color:var(--red);}
+.f8-row{display:flex;align-items:center;gap:0.4rem;padding:0.2rem 0;min-width:0;}
+.f8-row.f8-winner .f8-name{color:var(--lime);}
+.f8-flag{font-size:1.05rem;width:18px;text-align:center;flex-shrink:0;}
+.f8-name{font-family:'Barlow Condensed',sans-serif;font-size:0.85rem;font-weight:700;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.f8-name.tbd{color:var(--muted);font-weight:500;font-style:italic;font-family:'Inter',sans-serif;font-size:0.66rem;}
+.f8-score{font-family:'Barlow Condensed',sans-serif;font-size:0.95rem;font-weight:800;color:var(--text);flex-shrink:0;min-width:14px;text-align:right;}
+.f8-divider{height:1px;background:var(--border);margin:1px 0;}
+
+.f8-trophy-col{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.6rem;min-width:0;padding:0.5rem 0;}
+.f8-trophy-icon{font-size:2.6rem;line-height:1;filter:drop-shadow(0 0 18px rgba(240,165,0,0.35));}
+.f8-trophy-label{font-size:0.72rem;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:var(--amber);text-align:center;}
+.f8-champion-name{font-family:'Barlow Condensed',sans-serif;font-size:1.05rem;font-weight:800;color:var(--lime);text-align:center;}
+.f8-final-card{width:100%;}
+
+.f8-trophy-row{display:flex;justify-content:center;margin-top:1.5rem;}
+
+.f8-stage-label{
+  font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);
+  text-align:center;margin-bottom:0.5rem;
+}
+.f8-stage-labels-row{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr minmax(150px,1.1fr) 1fr 1fr 1fr;
+  gap:clamp(6px,1vw,16px);width:100%;
+}
+
+.f8-3rd-block{margin-top:1.75rem;padding-top:1.25rem;border-top:1px solid var(--border);}
+.f8-3rd-wrap{display:flex;justify-content:center;}
+.f8-3rd-wrap .f8-card{max-width:260px;}
+
+@media(max-width:860px){
+  #tab-final8{max-width:none;margin:0;padding:0;}
+  .f8-root{display:flex;flex-direction:column;align-items:center;gap:1.5rem;}
+  .f8-side,.f8-side.f8-right{display:flex;flex-direction:column;width:100%;}
+  .f8-col{width:100%;align-items:center;height:auto;}
+  .f8-card{width:100%;max-width:340px;}
+  .f8-trophy-col{padding:0.5rem 0;}
+  .f8-final-card{width:100%;max-width:340px;}
+  .f8-mobile-round-title{
+    font-family:'Barlow Condensed',sans-serif;font-size:0.95rem;font-weight:800;text-transform:uppercase;
+    letter-spacing:0.06em;color:var(--green);text-align:center;width:100%;
+    padding-top:0.5rem;border-top:1px solid var(--border);
+  }
+  .f8-mobile-round-title:first-child{border-top:none;padding-top:0;}
+}
+
 /* ── BOTTOM NAV (hidden on desktop, shown via mobile media query) ── */
 .more-menu-backdrop{
   display:none;position:fixed;inset:0;z-index:260;
@@ -849,6 +927,7 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
     <button onclick="showTab('grupos',this)">Grupos</button>
     <button onclick="showTab('terceros',this)">Terceros</button>
     <button onclick="showTab('bracket',this)">16avos</button>
+    <button onclick="showTab('final8',this)">Fase Final</button>
     <button onclick="showTab('stats',this)">Estadísticas</button>
     <button onclick="showTab('goleadores',this)">Goleadores</button>
     <button onclick="showTab('simulador',this)">Simulador</button>
@@ -879,6 +958,9 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
 <div id="more-menu-backdrop" class="more-menu-backdrop" onclick="closeMoreMenu(event)">
   <div class="more-menu-sheet">
     <div class="more-menu-handle"></div>
+    <button class="more-menu-item" data-tab="final8" onclick="showTabMobile('final8',this)">
+      <span class="bottom-nav-icon">🏆</span> Fase Final
+    </button>
     <button class="more-menu-item" data-tab="terceros" onclick="showTabMobile('terceros',this)">
       <span class="bottom-nav-icon">🥉</span> Mejores terceros
     </button>
@@ -981,6 +1063,15 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
       <button class="btn-pdf" onclick="downloadBracketPDF(this)">⬇<span class="btn-pdf-text"> Descargar PDF</span></button>
     </div>
     <div id="bracket-list"><div class="loader"><div class="spinner"></div>Armando el cuadro…</div></div>
+  </div>
+
+  <!-- FASE FINAL (R16 → Final) -->
+  <div id="tab-final8" class="tab-panel">
+    <div class="tab-header-row">
+      <div class="sec-label" style="margin-bottom:0;">Camino al título · octavos a la final</div>
+      <button class="btn-pdf" onclick="downloadFinal8PDF(this)">⬇<span class="btn-pdf-text"> Descargar PDF</span></button>
+    </div>
+    <div id="final8-wrap"><div class="loader"><div class="spinner"></div>Armando el camino al título…</div></div>
   </div>
 
   <!-- STATS -->
@@ -1114,7 +1205,7 @@ async function loadAll(){
     populateSimSelects();
     updateHeroStrip();
     updateCountdownBanner();
-    renderFixture();renderGrupos();renderTerceros();renderBracket();renderStats();renderGoleadores();
+    renderFixture();renderGrupos();renderTerceros();renderBracket();renderStats();renderGoleadores();renderFinal8();
   }catch(e){
     console.error(e);
     const err=`<div class="error-tile">⚠️ Error al conectar con <strong>worldcup26.ir</strong>: ${e.message}<br><br>Si abriste el archivo directo (<code>file://</code>), intentá desde <code>http://localhost:8080/mundial2026.html</code> corriendo <code>python -m http.server 8080</code> en la carpeta.</div>`;
@@ -1734,6 +1825,252 @@ function bracketMatchHtml(num,h,a,venue,definitive){
   </div>`;
 }
 
+// ── FASE FINAL (R16 → Final) ───────────────────────────────────────────────
+// La API ya trae los partidos 89-104 con id real; mientras no se resuelve el
+// cruce, home_team_id/away_team_id = "0" y vienen home_team_label/away_team_label
+// con texto tipo "Winner Match 73" / "Loser Match 101".
+const F8_LABEL_RE=/(Winner|Runner-up|Loser)\s+Match\s+(\d+)/i;
+
+function getGameById(id){
+  return allGames.find(g=>String(g.id)===String(id))||null;
+}
+
+function translateF8Label(label){
+  if(!label)return'Por confirmar';
+  const m=label.match(F8_LABEL_RE);
+  if(m){
+    const verb=m[1].toLowerCase();
+    const num=m[2];
+    const verbEs=verb==='winner'?'Ganador':(verb==='loser'?'Perdedor':'2do');
+    return`${verbEs} Pdo. ${num}`;
+  }
+  // labels de fase de grupos: "Winner Group A", "Runner-up Group B", "3rd Group C/D/F"
+  const gm=label.match(/Winner\s+Group\s+([A-L])/i);
+  if(gm)return`Ganador Grupo ${gm[1]}`;
+  const rm=label.match(/Runner-up\s+Group\s+([A-L])/i);
+  if(rm)return`2° Grupo ${rm[1]}`;
+  const tm=label.match(/3rd\s+Group\s+([A-L/]+)/i);
+  if(tm)return`Mejor 3° (${tm[1]})`;
+  return label;
+}
+
+function resolveF8Side(g,side){
+  // side: 'home' | 'away'
+  const tid=g[`${side}_team_id`];
+  const label=g[`${side}_team_label`];
+  if(tid&&String(tid)!=='0'){
+    const info=teamsById[String(tid)]||{};
+    return{name:info.name||`#${tid}`,known:true};
+  }
+  return{name:translateF8Label(label),known:false};
+}
+
+function f8CardHtml(matchId,roundLabel){
+  const g=getGameById(matchId);
+  if(!g){
+    return`<div class="f8-card" id="f8-card-${matchId}">
+      <div class="f8-card-meta"><span>${roundLabel} · Pdo. ${matchId}</span></div>
+      <div class="f8-row"><span class="f8-flag">🏳️</span><span class="f8-name tbd">Por confirmar</span></div>
+      <div class="f8-divider"></div>
+      <div class="f8-row"><span class="f8-flag">🏳️</span><span class="f8-name tbd">Por confirmar</span></div>
+    </div>`;
+  }
+  const h=resolveF8Side(g,'home'), a=resolveF8Side(g,'away');
+  const status=gameStatus(g);
+  const hs=homeScore(g), as=awayScore(g);
+  const hWins=status==='finished'&&hs!==null&&as!==null&&hs>as;
+  const aWins=status==='finished'&&hs!==null&&as!==null&&as>hs;
+  const showScore=status==='finished'||status==='live';
+  let metaRight='';
+  if(status==='live')metaRight='<span class="f8-live-tag">● EN VIVO</span>';
+  else if(status==='finished')metaRight='Finalizado';
+  else if(g.local_date)metaRight=fmtDate(g.local_date);
+  return`<div class="f8-card${status==='finished'?' f8-definitive':''}${status==='live'?' f8-live':''}" id="f8-card-${matchId}">
+    <div class="f8-card-meta"><span>${roundLabel} · Pdo. ${matchId}</span><span>${metaRight}</span></div>
+    <div class="f8-row${hWins?' f8-winner':''}">
+      <span class="f8-flag">${h.known?flag(h.name):'🏳️'}</span>
+      <span class="f8-name${h.known?'':' tbd'}">${h.name}</span>
+      ${showScore?`<span class="f8-score">${hs??'-'}</span>`:''}
+    </div>
+    <div class="f8-divider"></div>
+    <div class="f8-row${aWins?' f8-winner':''}">
+      <span class="f8-flag">${a.known?flag(a.name):'🏳️'}</span>
+      <span class="f8-name${a.known?'':' tbd'}">${a.name}</span>
+      ${showScore?`<span class="f8-score">${as??'-'}</span>`:''}
+    </div>
+  </div>`;
+}
+
+function f8ChampionInfo(){
+  const g=getGameById(104);
+  if(!g||gameStatus(g)!=='finished')return null;
+  const hs=homeScore(g),as=awayScore(g);
+  if(hs===null||as===null||hs===as)return null;
+  const winSide=hs>as?'home':'away';
+  const w=resolveF8Side(g,winSide);
+  return w.known?w.name:null;
+}
+
+function renderFinal8(){
+  const wrap=document.getElementById('final8-wrap');
+  if(!wrap)return;
+  const isMobile=window.matchMedia('(max-width:860px)').matches;
+  window._f8WasMobile=isMobile;
+  const champion=f8ChampionInfo();
+
+  const trophyBlock=`<div class="f8-trophy-col">
+    <div class="f8-trophy-icon">🏆</div>
+    ${champion
+      ?`<div class="f8-champion-name">${champion}</div><div class="f8-trophy-label">Campeón del mundo</div>`
+      :`<div class="f8-trophy-label">Final · Pdo. 104</div>`}
+  </div>`;
+
+  let html='';
+  if(!isMobile){
+    // ── DESKTOP: copa al centro, llaves abriéndose a los costados ──
+    const leftR16=[89,90,91,92], rightR16=[93,94,95,96];
+    const leftQF=[97,98], rightQF=[99,100];
+    const leftSF=[101], rightSF=[102];
+
+    html+='<div class="f8-stage-labels-row">';
+    html+=`<div class="f8-stage-label">Octavos</div>
+      <div class="f8-stage-label">Cuartos</div>
+      <div class="f8-stage-label">Semifinal</div>
+      <div class="f8-stage-label">Final</div>
+      <div class="f8-stage-label">Semifinal</div>
+      <div class="f8-stage-label">Cuartos</div>
+      <div class="f8-stage-label">Octavos</div>`;
+    html+='</div>';
+
+    html+='<div class="f8-bracket-wrap">';
+    html+='<svg class="f8-connectors" id="f8-connectors-svg"></svg>';
+    html+='<div class="f8-root">';
+    html+='<div class="f8-side f8-left">';
+    html+=`<div class="f8-col f8-r16">${leftR16.map(id=>f8CardHtml(id,'8vos')).join('')}</div>`;
+    html+=`<div class="f8-col f8-qf">${leftQF.map(id=>f8CardHtml(id,'Cuartos')).join('')}</div>`;
+    html+=`<div class="f8-col f8-sf">${leftSF.map(id=>f8CardHtml(id,'Semi')).join('')}</div>`;
+    html+='</div>';
+    html+=`<div class="f8-col f8-final-col">${f8CardHtml(104,'Final')}</div>`;
+    html+='<div class="f8-side f8-right">';
+    html+=`<div class="f8-col f8-r16">${rightR16.map(id=>f8CardHtml(id,'8vos')).join('')}</div>`;
+    html+=`<div class="f8-col f8-qf">${rightQF.map(id=>f8CardHtml(id,'Cuartos')).join('')}</div>`;
+    html+=`<div class="f8-col f8-sf">${rightSF.map(id=>f8CardHtml(id,'Semi')).join('')}</div>`;
+    html+='</div>';
+    html+='</div>';
+    html+='</div>'; // /f8-bracket-wrap
+    html+=`<div class="f8-trophy-row">${trophyBlock}</div>`;
+  } else {
+    // ── MOBILE: vertical, octavos arriba bajando a la final ──
+    html+='<div class="f8-root">';
+    html+='<div class="f8-col">';
+    html+='<div class="f8-mobile-round-title">Octavos de final</div>';
+    html+=[89,90,91,92,93,94,95,96].map(id=>f8CardHtml(id,'8vos')).join('');
+    html+='<div class="f8-mobile-round-title">Cuartos de final</div>';
+    html+=[97,98,99,100].map(id=>f8CardHtml(id,'Cuartos')).join('');
+    html+='<div class="f8-mobile-round-title">Semifinales</div>';
+    html+=[101,102].map(id=>f8CardHtml(id,'Semi')).join('');
+    html+='<div class="f8-mobile-round-title">Final</div>';
+    html+=`<div class="f8-final-card">${f8CardHtml(104,'Final')}</div>`;
+    html+=trophyBlock;
+    html+='</div>';
+    html+='</div>';
+  }
+
+  // Partido por el 3er puesto
+  html+=`<div class="f8-3rd-block">
+    <div class="sec-label">Partido por el tercer puesto</div>
+    <div class="f8-3rd-wrap">${f8CardHtml(103,'3er puesto')}</div>
+  </div>`;
+
+  wrap.innerHTML=html;
+
+  if(!isMobile){
+    const doDraw=()=>requestAnimationFrame(()=>requestAnimationFrame(drawF8Connectors));
+    if(document.fonts&&document.fonts.ready){document.fonts.ready.then(doDraw);}else{doDraw();}
+  }
+}
+
+function drawF8Connectors(){
+  const svg=document.getElementById('f8-connectors-svg');
+  const wrapEl=svg?svg.closest('.f8-bracket-wrap'):null;
+  if(!svg||!wrapEl)return;
+  const wrapRect=wrapEl.getBoundingClientRect();
+  svg.setAttribute('width',wrapRect.width);
+  svg.setAttribute('height',wrapRect.height);
+  svg.setAttribute('viewBox',`0 0 ${wrapRect.width} ${wrapRect.height}`);
+
+  function rectOf(id){
+    const el=document.getElementById('f8-card-'+id);
+    if(!el)return null;
+    const r=el.getBoundingClientRect();
+    return{
+      top:r.top-wrapRect.top, bottom:r.bottom-wrapRect.top,
+      left:r.left-wrapRect.left, right:r.right-wrapRect.left,
+      midY:(r.top+r.bottom)/2-wrapRect.top
+    };
+  }
+
+  // path tipo "codo": de (x1,y1) sale horizontal, dobla vertical, entra horizontal en (x2,y2)
+  function elbowPath(x1,y1,x2,y2){
+    const midX=(x1+x2)/2;
+    return`M${x1},${y1} H${midX} V${y2} H${x2}`;
+  }
+
+  let paths='';
+  function isDone(matchId){
+    const g=getGameById(matchId);
+    return g&&gameStatus(g)==='finished';
+  }
+  // conexiones lado izquierdo: hijos a la derecha de los padres
+  function connectLeft(parentIds,childId){
+    const child=rectOf(childId);
+    if(!child)return;
+    parentIds.forEach(pid=>{
+      const p=rectOf(pid);
+      if(!p)return;
+      const cls=isDone(pid)?' class="f8-conn-done"':'';
+      paths+=`<path${cls} d="${elbowPath(p.right,p.midY,child.left,child.midY)}"/>`;
+    });
+  }
+  // conexiones lado derecho: hijos a la izquierda de los padres (espejo)
+  function connectRight(parentIds,childId){
+    const child=rectOf(childId);
+    if(!child)return;
+    parentIds.forEach(pid=>{
+      const p=rectOf(pid);
+      if(!p)return;
+      const cls=isDone(pid)?' class="f8-conn-done"':'';
+      paths+=`<path${cls} d="${elbowPath(p.left,p.midY,child.right,child.midY)}"/>`;
+    });
+  }
+
+  // IZQUIERDA: 89+90→97, 91+92→98, 97+98→101, 101→104
+  connectLeft([89,90],97);
+  connectLeft([91,92],98);
+  connectLeft([97,98],101);
+  connectLeft([101],104);
+  // DERECHA: 93+94→99, 95+96→100, 99+100→102, 102→104
+  connectRight([93,94],99);
+  connectRight([95,96],100);
+  connectRight([99,100],102);
+  connectRight([102],104);
+
+  svg.innerHTML=paths;
+}
+
+window.addEventListener('resize',()=>{
+  clearTimeout(window._f8ResizeT2);
+  window._f8ResizeT2=setTimeout(()=>{
+    const isMobile=window.matchMedia('(max-width:860px)').matches;
+    if(isMobile!==window._f8WasMobile){
+      window._f8WasMobile=isMobile;
+      renderFinal8();
+    } else if(!isMobile){
+      drawF8Connectors();
+    }
+  },150);
+});
+
 function renderStats(){
   const played=allGames.filter(g=>gameStatus(g)==='finished');
   const live=allGames.filter(g=>gameStatus(g)==='live');
@@ -1891,6 +2228,7 @@ function showTab(name,btn){
   document.getElementById('tab-'+name).classList.add('active');
   if(btn)btn.classList.add('active');
   syncMobileNav(name);
+  if(name==='final8')renderFinal8();
 }
 
 function showTabMobile(name,el){
@@ -1904,6 +2242,7 @@ function showTabMobile(name,el){
   syncMobileNav(name);
   closeMoreMenu();
   window.scrollTo({top:0,behavior:'smooth'});
+  if(name==='final8')renderFinal8();
 }
 
 function syncMobileNav(name){
@@ -2394,6 +2733,102 @@ function downloadBracketPDF(btn){
 }
 
 // ── STATS PDF ──────────────────────────────────────────────────────────────
+// ── FASE FINAL PDF (R16 → Final) ────────────────────────────────────────────
+function downloadFinal8PDF(btn){
+  setBtnLoading(btn,true);
+  setTimeout(()=>{
+    try{
+      const {jsPDF}=window.jspdf;
+      const doc=new jsPDF({unit:'mm',format:'a4'});
+      let y=pdfHeader(doc,'Camino al título · Octavos a la Final');
+      const pw=doc.internal.pageSize.getWidth();
+
+      const rounds=[
+        {label:'Octavos de final',ids:[89,90,91,92,93,94,95,96]},
+        {label:'Cuartos de final',ids:[97,98,99,100]},
+        {label:'Semifinales',ids:[101,102]},
+        {label:'Final',ids:[104]},
+      ];
+
+      rounds.forEach(rd=>{
+        y=checkPageBreak(doc,y,14,()=>pdfHeader(doc,'Camino al título · Octavos a la Final'));
+        doc.setFillColor(...PDF_LIGHT_GRAY);
+        doc.rect(14,y,pw-28,7,'F');
+        doc.setFont('helvetica','bold');
+        doc.setFontSize(9);
+        doc.setTextColor(...PDF_GREEN);
+        doc.text(rd.label.toUpperCase(),17,y+5);
+        y+=11;
+
+        rd.ids.forEach(id=>{
+          const g=getGameById(id);
+          y=checkPageBreak(doc,y,20,()=>pdfHeader(doc,'Camino al título · Octavos a la Final'));
+          const h=g?resolveF8Side(g,'home'):{name:'Por confirmar',known:false};
+          const a=g?resolveF8Side(g,'away'):{name:'Por confirmar',known:false};
+          const status=g?gameStatus(g):'upcoming';
+          const hs=g?homeScore(g):null, as=g?awayScore(g):null;
+          const definitive=status==='finished';
+
+          doc.setDrawColor(...(definitive?PDF_GREEN_LT:[210,210,215]));
+          doc.setLineWidth(definitive?0.5:0.25);
+          doc.roundedRect(14,y,pw-28,16,1.5,1.5);
+
+          doc.setFontSize(6.5);
+          doc.setFont('helvetica','bold');
+          doc.setTextColor(...PDF_GRAY);
+          doc.text(`PARTIDO ${id}`,17,y+4);
+          doc.setFont('helvetica','normal');
+          doc.text(definitive?'FINALIZADO':(status==='live'?'EN VIVO':'A CONFIRMAR'),pw-17,y+4,{align:'right'});
+
+          doc.setFont('helvetica','bold');
+          doc.setFontSize(8.5);
+          doc.setTextColor(h.known?30:150,h.known?30:150,h.known?35:155);
+          doc.text(h.name,17,y+10);
+          if(hs!==null&&as!==null){doc.setTextColor(...PDF_GREEN);doc.text(String(hs),pw-17,y+10,{align:'right'});}
+
+          doc.setTextColor(a.known?30:150,a.known?30:150,a.known?35:155);
+          doc.text(a.name,17,y+14.5);
+          if(hs!==null&&as!==null){doc.setTextColor(...PDF_GREEN);doc.text(String(as),pw-17,y+14.5,{align:'right'});}
+
+          y+=19;
+        });
+        y+=3;
+      });
+
+      // Tercer puesto
+      y=checkPageBreak(doc,y,20,()=>pdfHeader(doc,'Camino al título · Octavos a la Final'));
+      doc.setFillColor(...PDF_LIGHT_GRAY);
+      doc.rect(14,y,pw-28,7,'F');
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(9);
+      doc.setTextColor(...PDF_AMBER);
+      doc.text('PARTIDO POR EL TERCER PUESTO',17,y+5);
+      y+=11;
+      {
+        const g=getGameById(103);
+        const h=g?resolveF8Side(g,'home'):{name:'Por confirmar',known:false};
+        const a=g?resolveF8Side(g,'away'):{name:'Por confirmar',known:false};
+        const hs=g?homeScore(g):null, as=g?awayScore(g):null;
+        doc.setDrawColor(210,210,215);
+        doc.setLineWidth(0.25);
+        doc.roundedRect(14,y,pw-28,16,1.5,1.5);
+        doc.setFont('helvetica','bold');
+        doc.setFontSize(8.5);
+        doc.setTextColor(h.known?30:150,h.known?30:150,h.known?35:155);
+        doc.text(h.name,17,y+6.5);
+        if(hs!==null&&as!==null){doc.setTextColor(...PDF_GREEN);doc.text(String(hs),pw-17,y+6.5,{align:'right'});}
+        doc.setTextColor(a.known?30:150,a.known?30:150,a.known?35:155);
+        doc.text(a.name,17,y+12.5);
+        if(hs!==null&&as!==null){doc.setTextColor(...PDF_GREEN);doc.text(String(as),pw-17,y+12.5,{align:'right'});}
+      }
+
+      pdfFooter(doc);
+      doc.save('mundial2026_fase_final.pdf');
+    }catch(e){console.error(e);alert('Error al generar el PDF: '+e.message);}
+    setBtnLoading(btn,false);
+  },50);
+}
+
 function downloadStatsPDF(btn){
   setBtnLoading(btn,true);
   setTimeout(()=>{
