@@ -335,43 +335,6 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
 .pts-cell{font-family:'Barlow Condensed',sans-serif;font-size:1.05rem;font-weight:800;color:var(--text);}
 
 /* ── STATS ── */
-.kpi-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(100px,1fr));
-  gap:0.75rem;
-  margin-bottom:1.75rem;
-}
-.kpi-card{
-  background:var(--ink2);border:1px solid var(--border);
-  border-radius:var(--r2);padding:1rem 0.75rem;text-align:center;
-  transition:border-color 0.2s;
-}
-.kpi-card:hover{border-color:var(--green-dk);}
-.kpi-val{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:2rem;font-weight:800;line-height:1;
-  color:var(--text);
-}
-.kpi-lbl{
-  font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
-  color:var(--muted2);margin-top:5px;
-}
-
-.topgames-list{display:flex;flex-direction:column;gap:0.5rem;}
-.topgame-row{
-  background:var(--ink2);border:1px solid var(--border);
-  border-radius:var(--r);padding:0.8rem 1rem;
-  display:flex;align-items:center;gap:1rem;
-  cursor:pointer;transition:border-color 0.2s,transform 0.15s;
-}
-.topgame-row:hover{border-color:var(--green-dk);transform:translateX(3px);}
-.topgame-teams{flex:1;font-size:0.85rem;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:0.02em;}
-.topgame-goals{
-  font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:800;
-  color:var(--amber);white-space:nowrap;
-}
-.goals-bar-wrap{width:120px;background:var(--ink4);border-radius:3px;height:4px;overflow:hidden;flex-shrink:0;}
-.goals-bar-fill{height:100%;background:var(--amber);border-radius:3px;transition:width 0.8s cubic-bezier(.4,0,.2,1);}
 
 /* ── GOLEADORES ── */
 .scorers-list{display:flex;flex-direction:column;gap:0;}
@@ -401,39 +364,6 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
 .sc-ball{font-size:0.8rem;margin-left:2px;}
 
 /* ── SIMULADOR ── */
-.sim-wrap{
-  background:var(--ink2);border:1px solid var(--border);
-  border-radius:var(--r2);padding:1.5rem;
-}
-.sim-teams-row{
-  display:grid;grid-template-columns:1fr 80px 1fr;
-  align-items:center;gap:1rem;margin-bottom:1.25rem;
-}
-.sim-side{text-align:center;}
-.sim-side select{
-  width:100%;background:var(--ink3);border:1px solid var(--border);
-  border-radius:var(--r);color:var(--text);
-  font-family:'Inter',sans-serif;font-size:0.82rem;
-  padding:0.55rem 0.75rem;outline:none;
-  transition:border-color 0.15s;
-}
-.sim-side select:focus{border-color:var(--green);}
-.sim-side select option{background:var(--ink3);}
-.sim-eflag{font-size:2.5rem;display:block;margin-top:0.5rem;min-height:3rem;text-align:center;}
-.sim-vs{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:1.1rem;font-weight:800;color:var(--muted2);text-align:center;
-}
-.sim-controls{
-  display:flex;align-items:center;justify-content:center;
-  gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;
-}
-.sim-controls label{font-size:0.78rem;color:var(--muted);}
-.sim-controls select{
-  background:var(--ink3);border:1px solid var(--border);
-  border-radius:var(--r);color:var(--text);
-  font-size:0.8rem;padding:0.45rem 0.75rem;outline:none;
-}
 .btn-sim{
   background:var(--green-dk);border:none;border-radius:var(--r);
   color:#fff;cursor:pointer;
@@ -444,44 +374,6 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
 }
 .btn-sim:hover{background:var(--green);box-shadow:0 0 20px rgba(82,176,67,0.3);}
 .btn-sim:active{transform:scale(0.97);}
-
-.sim-result-wrap{
-  background:var(--ink3);border:1px solid var(--border);
-  border-radius:var(--r2);padding:1.5rem;
-  animation:fadeIn 0.25s ease;
-}
-.sim-result-score{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:3.5rem;font-weight:800;letter-spacing:0.08em;
-  text-align:center;color:var(--text);line-height:1;
-  margin-bottom:0.5rem;
-}
-.sim-result-label{
-  text-align:center;font-size:0.72rem;color:var(--muted);
-  font-weight:500;letter-spacing:0.06em;text-transform:uppercase;
-  margin-bottom:1.25rem;
-}
-.sim-probs{
-  display:grid;grid-template-columns:1fr 1fr 1fr;
-  gap:0.75rem;margin-bottom:1.25rem;
-}
-.sim-prob-box{
-  background:var(--ink2);border:1px solid var(--border);
-  border-radius:var(--r);padding:0.75rem 0.5rem;text-align:center;
-}
-.sim-prob-pct{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:1.6rem;font-weight:800;line-height:1;color:var(--text);
-}
-.sim-prob-lbl{font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-top:3px;}
-
-.sim-freq-title{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted2);margin-bottom:0.6rem;}
-.sim-freq-row{display:flex;align-items:center;gap:0.75rem;margin-bottom:0.35rem;font-size:0.82rem;}
-.sim-freq-sc{font-family:'Barlow Condensed',sans-serif;font-size:0.95rem;font-weight:800;color:var(--green);width:36px;flex-shrink:0;}
-.sim-freq-bar-wrap{flex:1;background:var(--ink4);border-radius:2px;height:5px;overflow:hidden;}
-.sim-freq-bar{height:100%;background:var(--green-dk);border-radius:2px;transition:width 0.6s cubic-bezier(.4,0,.2,1);}
-.sim-freq-pct{color:var(--muted);font-size:0.75rem;min-width:28px;text-align:right;}
-.sim-footnote{font-size:0.68rem;color:var(--muted2);text-align:center;margin-top:1rem;}
 
 /* ── MODAL ── */
 .modal-backdrop{
@@ -650,30 +542,16 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
   .grupo-table th:first-child,.grupo-table td:first-child{padding-left:0.6rem;}
 
   /* ── KPI / Stats ── */
-  .kpi-grid{grid-template-columns:repeat(3,1fr);gap:0.5rem;}
-  .kpi-card{padding:0.75rem 0.4rem;}
-  .kpi-val{font-size:1.5rem;}
-  .topgame-row{flex-wrap:wrap;gap:0.5rem;}
-  .topgame-teams{font-size:0.78rem;width:100%;order:1;}
-  .goals-bar-wrap{order:2;width:auto;flex:1;}
-  .topgame-goals{order:3;font-size:1.1rem;}
 
   /* ── Terceros / Bracket ── */
   .thirds-table{font-size:0.68rem;}
   .thirds-table th,.thirds-table td{padding:0.4rem 0.3rem;}
-  .bracket-grid{grid-template-columns:1fr;gap:0.65rem;}
 
   /* ── Goleadores ── */
   .scorer-tile{padding:0.6rem 0.75rem;gap:0.6rem;}
   .sc-name{font-size:0.84rem;}
 
   /* ── Simulador ── */
-  .sim-teams-row{grid-template-columns:1fr 36px 1fr;gap:0.5rem;}
-  .sim-vs{font-size:0.75rem;}
-  .sim-eflag{font-size:1.8rem;min-height:2.2rem;}
-  .sim-controls{gap:0.6rem;}
-  .sim-result-score{font-size:2.4rem;}
-  .sim-probs{gap:0.4rem;}
 
   /* ── Modal: nearly full screen on mobile ── */
   .modal{max-width:100%;width:100%;max-height:92vh;border-radius:16px 16px 0 0;}
@@ -686,7 +564,6 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
   .bottom-nav-label{font-size:0.52rem;}
   .tile-name{font-size:0.72rem;}
 }
-
 
 /* ── DATE SELECTOR (replaces old day-tabs carousel) ── */
 .date-nav{
@@ -760,40 +637,6 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
 .thirds-note{font-size:0.7rem;color:var(--muted2);margin-top:0.75rem;line-height:1.6;}
 
 /* ── BRACKET 16avos ── */
-.bracket-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:0.85rem;}
-.bracket-match{
-  background:var(--ink2);border:1px solid var(--border);border-radius:var(--r2);
-  padding:0.85rem 1rem;transition:border-color 0.2s,transform 0.15s;
-}
-.bracket-match:hover{border-color:var(--border2);transform:translateY(-1px);}
-.bracket-match-num{font-size:0.62rem;color:var(--muted2);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.5rem;display:flex;justify-content:space-between;}
-.bracket-match-date{color:var(--muted2);}
-.bracket-side{display:flex;align-items:center;gap:0.6rem;padding:0.35rem 0;}
-.bracket-side-flag{font-size:1.3rem;width:24px;text-align:center;flex-shrink:0;}
-.bracket-side-name{font-family:'Barlow Condensed',sans-serif;font-size:0.95rem;font-weight:700;flex:1;}
-.bracket-side-name.tbd{color:var(--muted);font-weight:500;font-style:italic;font-family:'Inter',sans-serif;font-size:0.8rem;}
-.bracket-side-tag{font-size:0.62rem;color:var(--muted2);font-weight:600;background:var(--ink3);border-radius:4px;padding:1px 6px;flex-shrink:0;}
-.bracket-vs-line{height:1px;background:var(--border);margin:2px 0;}
-.bracket-venue{font-size:0.68rem;color:var(--muted2);margin-top:0.6rem;padding-top:0.5rem;border-top:1px solid var(--border);}
-.bracket-note{font-size:0.7rem;color:var(--muted2);margin-top:1rem;line-height:1.6;}
-.bracket-pending-banner{
-  background:var(--amber-bg);border:1px solid rgba(240,165,0,0.25);
-  border-radius:var(--r);padding:0.75rem 1rem;margin-bottom:1.25rem;
-  font-size:0.78rem;color:var(--amber);line-height:1.6;
-}
-.bracket-match-definitive{
-  border-color:rgba(82,176,67,0.35);
-  background:linear-gradient(135deg,rgba(82,176,67,0.06) 0%,var(--ink2) 60%);
-}
-.bracket-match-definitive:hover{border-color:var(--green);}
-.bracket-status-row{margin-top:0.6rem;padding-top:0.5rem;border-top:1px solid var(--border);display:flex;justify-content:flex-end;}
-.bracket-status-badge{
-  display:inline-flex;align-items:center;gap:4px;
-  font-size:0.6rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
-  padding:2px 8px;border-radius:20px;
-}
-.bracket-status-def{background:rgba(82,176,67,0.18);color:var(--green);border:1px solid rgba(82,176,67,0.3);}
-.bracket-status-pend{background:rgba(240,165,0,0.1);color:var(--amber);border:1px solid rgba(240,165,0,0.2);}
 
 /* ── FASE FINAL (16avos → Final) — bracket compacto estilo llaves, copa al centro ── */
 #tab-final8{max-width:none;margin:0 -1.5rem;padding:0 1.5rem;}
@@ -938,11 +781,8 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
     <button class="active" onclick="showTab('fixture',this)">Fixture</button>
     <button onclick="showTab('grupos',this)">Grupos</button>
     <button onclick="showTab('terceros',this)">Terceros</button>
-    <button onclick="showTab('bracket',this)">16avos</button>
     <button onclick="showTab('final8',this)">Fase Final</button>
-    <button onclick="showTab('stats',this)">Estadísticas</button>
     <button onclick="showTab('goleadores',this)">Goleadores</button>
-    <button onclick="showTab('simulador',this)">Simulador</button>
   </nav>
   <div class="live-pill"><span class="live-dot"></span><span id="live-count-pill">cargando…</span></div>
 </div>
@@ -955,8 +795,8 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
   <button class="bottom-nav-btn" data-tab="grupos" onclick="showTabMobile('grupos',this)">
     <span class="bottom-nav-icon">📊</span><span class="bottom-nav-label">Grupos</span>
   </button>
-  <button class="bottom-nav-btn" data-tab="bracket" onclick="showTabMobile('bracket',this)">
-    <span class="bottom-nav-icon">🏆</span><span class="bottom-nav-label">16avos</span>
+  <button class="bottom-nav-btn" data-tab="final8" onclick="showTabMobile('final8',this)">
+    <span class="bottom-nav-icon">🏆</span><span class="bottom-nav-label">Fase Final</span>
   </button>
   <button class="bottom-nav-btn" data-tab="goleadores" onclick="showTabMobile('goleadores',this)">
     <span class="bottom-nav-icon">⚽</span><span class="bottom-nav-label">Goles</span>
@@ -970,17 +810,8 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
 <div id="more-menu-backdrop" class="more-menu-backdrop" onclick="closeMoreMenu(event)">
   <div class="more-menu-sheet">
     <div class="more-menu-handle"></div>
-    <button class="more-menu-item" data-tab="final8" onclick="showTabMobile('final8',this)">
-      <span class="bottom-nav-icon">🏆</span> Fase Final
-    </button>
     <button class="more-menu-item" data-tab="terceros" onclick="showTabMobile('terceros',this)">
       <span class="bottom-nav-icon">🥉</span> Mejores terceros
-    </button>
-    <button class="more-menu-item" data-tab="stats" onclick="showTabMobile('stats',this)">
-      <span class="bottom-nav-icon">📈</span> Estadísticas
-    </button>
-    <button class="more-menu-item" data-tab="simulador" onclick="showTabMobile('simulador',this)">
-      <span class="bottom-nav-icon">🎲</span> Simulador
     </button>
   </div>
 </div>
@@ -1069,14 +900,6 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
   </div>
 
   <!-- BRACKET 16avos -->
-  <div id="tab-bracket" class="tab-panel">
-    <div class="tab-header-row">
-      <div class="sec-label" style="margin-bottom:0;">Cómo queda el cuadro de dieciseisavos</div>
-      <button class="btn-pdf" onclick="downloadBracketPDF(this)">⬇<span class="btn-pdf-text"> Descargar PDF</span></button>
-    </div>
-    <div id="bracket-list"><div class="loader"><div class="spinner"></div>Armando el cuadro…</div></div>
-  </div>
-
   <!-- FASE FINAL (R16 → Final) -->
   <div id="tab-final8" class="tab-panel">
     <div class="tab-header-row">
@@ -1084,17 +907,6 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
       <button class="btn-pdf" onclick="downloadFinal8PDF(this)">⬇<span class="btn-pdf-text"> Descargar PDF</span></button>
     </div>
     <div id="final8-wrap"><div class="loader"><div class="spinner"></div>Armando el camino al título…</div></div>
-  </div>
-
-  <!-- STATS -->
-  <div id="tab-stats" class="tab-panel">
-    <div class="tab-header-row">
-      <div class="sec-label" style="margin-bottom:0;">Resumen del torneo</div>
-      <button class="btn-pdf" onclick="downloadStatsPDF(this)">⬇<span class="btn-pdf-text"> Descargar PDF</span></button>
-    </div>
-    <div class="kpi-grid" id="kpi-grid"></div>
-    <div class="sec-label">Partidos con más goles</div>
-    <div class="topgames-list" id="topgames-list"></div>
   </div>
 
   <!-- GOLEADORES -->
@@ -1108,33 +920,7 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
     </div>
   </div>
 
-  <!-- SIMULADOR -->
-  <div id="tab-simulador" class="tab-panel">
-    <div class="sec-label">Simulador · modelo de Poisson</div>
-    <div class="sim-wrap">
-      <div class="sim-teams-row">
-        <div class="sim-side">
-          <select id="sim-home" onchange="updateSimFlags()"><option value="">— Local —</option></select>
-          <span class="sim-eflag" id="sim-home-flag"></span>
-        </div>
-        <div class="sim-vs">VS</div>
-        <div class="sim-side">
-          <select id="sim-away" onchange="updateSimFlags()"><option value="">— Visitante —</option></select>
-          <span class="sim-eflag" id="sim-away-flag"></span>
-        </div>
-      </div>
-      <div class="sim-controls">
-        <label>Simulaciones:</label>
-        <select id="sim-n">
-          <option value="1000">1.000</option>
-          <option value="10000" selected>10.000</option>
-          <option value="50000">50.000</option>
-        </select>
-        <button class="btn-sim" onclick="runSimulator()">▶ Simular</button>
-      </div>
-      <div id="sim-result"></div>
-    </div>
-  </div>
+  <!-- SIMULADOR (eliminado: ya no se usa) -->
 </main>
 
 <!-- MATCH MODAL -->
@@ -1231,14 +1017,13 @@ async function loadAll(){
     const groups=[...new Set(allGames.map(g=>g.group).filter(Boolean))].sort();
     const gsel=document.getElementById('filterGroup');
     groups.forEach(gr=>{gsel.innerHTML+=`<option value="${gr}">Grupo ${gr}</option>`;});
-    populateSimSelects();
     updateHeroStrip();
     updateCountdownBanner();
-    renderFixture();renderGrupos();renderTerceros();renderBracket();renderStats();renderGoleadores();renderFinal8();
+    renderFixture();renderGrupos();renderTerceros();renderGoleadores();renderFinal8();
   }catch(e){
     console.error(e);
     const err=`<div class="error-tile">⚠️ Error al conectar con <strong>worldcup26.ir</strong>: ${e.message}<br><br>Si abriste el archivo directo (<code>file://</code>), intentá desde <code>http://localhost:8080/mundial2026.html</code> corriendo <code>python -m http.server 8080</code> en la carpeta.</div>`;
-    ['fixture-list','grupos-list','topgames-list','scorers-list'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=err;});
+    ['fixture-list','grupos-list','final8-wrap','scorers-list'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=err;});
     document.getElementById('live-count-pill').textContent='sin datos';
   }
 }
@@ -1782,82 +1567,11 @@ function areAllGroupsComplete(){
   return allGroups.length>0 && allGroups.every(g=>isGroupComplete(g.name));
 }
 
-function renderBracket(){
-  if(!allGroups.length){document.getElementById('bracket-list').innerHTML='<div class="empty-tile">Sin datos de grupos.</div>';return;}
-
-  const qualifiedThirds=getQualifiedThirds();
-  const allGroupsComplete=areAllGroupsComplete();
-  const completeCount=allGroups.filter(g=>isGroupComplete(g.name)).length;
-
-  let banner='';
-  if(!allGroupsComplete){
-    banner=`<div class="bracket-pending-banner">⚠️ ${completeCount} de ${allGroups.length} grupos ya cerraron su fase. Los cruces marcados <strong>DEFINITIVO</strong> no pueden cambiar más. Los marcados <strong>A CONFIRMAR</strong> todavía dependen de partidos pendientes en algún grupo involucrado.</div>`;
-  } else {
-    banner=`<div class="bracket-pending-banner" style="background:var(--green-bg);border-color:rgba(82,176,67,0.3);color:var(--green);">✅ Fase de grupos finalizada. Los 16 cruces de dieciseisavos son definitivos.</div>`;
-  }
-
-  let html=banner+'<div class="bracket-grid">';
-
-  // Render fixed matchups: definitive only if BOTH groups involved are complete
-  FIXED_R32.forEach(m=>{
-    const h=resolveSlot(m.home), a=resolveSlot(m.away);
-    const definitive = h.definitive && a.definitive;
-    html+=bracketMatchHtml(m.num,h,a,m.venue,definitive);
-  });
-
-  // Render third-place dependent matchups:
-  // definitive only if the home group is complete AND all 12 groups are complete
-  // (any group finishing could still alter who makes the best-8-thirds cut)
-  THIRD_PLACE_R32.forEach(m=>{
-    const h=resolveSlot(m.home);
-    const eligibleThird=qualifiedThirds.find(t=>m.thirdGroups.includes(t.group));
-    let a;
-    if(eligibleThird && allGroupsComplete){
-      const name=teamLabel(eligibleThird.team_id);
-      a={name,tag:`3° Grupo ${eligibleThird.group}`,definitive:true};
-    } else if(eligibleThird){
-      // provisional projection, not yet locked
-      const name=teamLabel(eligibleThird.team_id);
-      a={name,tag:`3° Grupo ${eligibleThird.group} (proyectado)`,definitive:false};
-    } else {
-      a={name:null,tag:`Mejor 3° (${m.thirdGroups.join('/')})`,definitive:false};
-    }
-    const definitive = h.definitive && a.definitive && allGroupsComplete;
-    html+=bracketMatchHtml(m.num,h,a,m.venue,definitive);
-  });
-
-  html+='</div>';
-  html+=`<div class="bracket-note">📋 Cuadro de dieciseisavos según el reglamento oficial FIFA. 8 cruces son fijos entre ganadores y segundos de grupo; los otros 8 enfrentan a un ganador de grupo contra el mejor tercero disponible entre un conjunto predefinido de grupos. Un cruce es <strong>definitivo</strong> recién cuando los grupos involucrados terminaron sus 3 fechas — para los cruces con "mejor 3°" esto requiere que los 12 grupos hayan finalizado, ya que cualquier resultado pendiente puede alterar el ranking de terceros.</div>`;
-
-  document.getElementById('bracket-list').innerHTML=html;
-}
-
-function bracketMatchHtml(num,h,a,venue,definitive){
-  const hName=h.name||null, aName=a.name||null;
-  const statusBadge = definitive
-    ? `<span class="bracket-status-badge bracket-status-def">✓ Definitivo</span>`
-    : `<span class="bracket-status-badge bracket-status-pend">A confirmar</span>`;
-  return`<div class="bracket-match${definitive?' bracket-match-definitive':''}">
-    <div class="bracket-match-num"><span>16avos · Partido ${num}</span><span class="bracket-match-date">${venue}</span></div>
-    <div class="bracket-side">
-      <span class="bracket-side-flag">${hName?flag(hName):'🏳️'}</span>
-      <span class="bracket-side-name${hName?'':' tbd'}">${hName||h.tag}</span>
-      ${hName?`<span class="bracket-side-tag">${h.tag}</span>`:''}
-    </div>
-    <div class="bracket-vs-line"></div>
-    <div class="bracket-side">
-      <span class="bracket-side-flag">${aName?flag(aName):'🏳️'}</span>
-      <span class="bracket-side-name${aName?'':' tbd'}">${aName||a.tag}</span>
-      ${aName?`<span class="bracket-side-tag">${a.tag}</span>`:''}
-    </div>
-    <div class="bracket-status-row">${statusBadge}</div>
-  </div>`;
-}
-
 // ── FASE FINAL (16avos → Final) ────────────────────────────────────────────
-// 73-88: 16avos (R32), se calculan en el cliente igual que en renderBracket().
-// 89-104: la API ya trae estos partidos con id real; mientras no se resuelve el
-// cruce, home_team_id/away_team_id = "0" y vienen home_team_label/away_team_label
+// 73-88: 16avos (R32). 89-104: cuartos en adelante. Todos se leen directo de la API
+// (ya no se calculan en el cliente: la fase de grupos terminó y los 16avos ya están confirmados).
+// Mientras un cruce de fase posterior no se resuelve, home_team_id/away_team_id="0" y vienen
+// home_team_label/away_team_label
 // con texto tipo "Winner Match 73" / "Loser Match 101".
 const F8_LABEL_RE=/(Winner|Runner-up|Loser)\s+Match\s+(\d+)/i;
 const F8_R32_BY_NUM={};
@@ -2136,38 +1850,6 @@ window.addEventListener('resize',()=>{
   },150);
 });
 
-function renderStats(){
-  const played=allGames.filter(g=>gameStatus(g)==='finished');
-  const live=allGames.filter(g=>gameStatus(g)==='live');
-  const goals=played.reduce((s,g)=>(s+(homeScore(g)||0)+(awayScore(g)||0)),0);
-  const avg=played.length?(goals/played.length).toFixed(1):'—';
-  const maxGoalGame=played.reduce((mx,g)=>((homeScore(g)||0)+(awayScore(g)||0))>(((homeScore(mx)||0)+(awayScore(mx)||0))||0)?g:mx,played[0]);
-
-  document.getElementById('kpi-grid').innerHTML=`
-    <div class="kpi-card"><div class="kpi-val">${allGames.length}</div><div class="kpi-lbl">Total partidos</div></div>
-    <div class="kpi-card"><div class="kpi-val" style="color:var(--green)">${played.length}</div><div class="kpi-lbl">Jugados</div></div>
-    <div class="kpi-card"><div class="kpi-val" style="color:var(--amber)">${allGames.length-played.length-live.length}</div><div class="kpi-lbl">Pendientes</div></div>
-    <div class="kpi-card"><div class="kpi-val" style="color:var(--red)">${live.length}</div><div class="kpi-lbl">En vivo</div></div>
-    <div class="kpi-card"><div class="kpi-val" style="color:var(--green)">${goals}</div><div class="kpi-lbl">Goles</div></div>
-    <div class="kpi-card"><div class="kpi-val">${avg}</div><div class="kpi-lbl">Goles/pdo</div></div>
-  `;
-
-  if(!played.length){document.getElementById('topgames-list').innerHTML='<div class="empty-tile">Sin partidos finalizados.</div>';return;}
-  const top=played.map(g=>({...g,total:(homeScore(g)||0)+(awayScore(g)||0)})).sort((a,b)=>b.total-a.total).slice(0,8);
-  const maxG=top[0]?.total||1;
-  let html='';
-  top.forEach(g=>{
-    const hname=homeName(g),aname=awayName(g);
-    const pct=Math.round((g.total/maxG)*100);
-    html+=`<div class="topgame-row" onclick="openMatchDetail('${g.id||g._id}')">
-      <div class="topgame-teams">${flag(hname)} ${hname} <span style="color:var(--muted);font-weight:400">vs</span> ${aname} ${flag(aname)}</div>
-      <div class="goals-bar-wrap"><div class="goals-bar-fill" style="width:${pct}%"></div></div>
-      <div class="topgame-goals">${homeScore(g)} – ${awayScore(g)} <span style="font-size:0.9rem;color:var(--muted)">⚽${g.total}</span></div>
-    </div>`;
-  });
-  document.getElementById('topgames-list').innerHTML=html;
-}
-
 function renderGoleadores(){
   const scorers={};
   allGames.filter(g=>gameStatus(g)==='finished').forEach(g=>{
@@ -2184,67 +1866,6 @@ function renderGoleadores(){
       <div class="sc-info"><div class="sc-name">${s.name}</div><div class="sc-team">${s.team}</div></div>
       <div class="sc-goals">${s.goals}<span class="sc-ball">⚽</span></div>
     </div>`).join('');
-}
-
-function populateSimSelects(){
-  const names=[...new Set(allGames.flatMap(g=>[homeName(g),awayName(g)]).filter(Boolean))].sort();
-  ['sim-home','sim-away'].forEach(id=>{
-    const sel=document.getElementById(id);
-    sel.innerHTML='<option value="">— Equipo —</option>';
-    names.forEach(t=>{sel.innerHTML+=`<option value="${t}">${flag(t)} ${t}</option>`;});
-  });
-}
-function updateSimFlags(){
-  document.getElementById('sim-home-flag').textContent=flag(document.getElementById('sim-home').value)||'';
-  document.getElementById('sim-away-flag').textContent=flag(document.getElementById('sim-away').value)||'';
-}
-
-function getTeamStrength(name){
-  for(const grp of allGroups){
-    for(const t of(grp.teams||[])){
-      const tinfo=teamsById[String(t.team_id)]||{};
-      if(tinfo.name===name){const mp=Math.max(1,parseInt(t.mp)||1);return{avg:(parseInt(t.gf)||0)/mp,pts:parseInt(t.pts)||0};}
-    }
-  }
-  const elite=['Brazil','France','Germany','Spain','England','Argentina','Portugal','Netherlands'];
-  const mid=['Italy','Belgium','Croatia','Denmark','Switzerland','Uruguay','Mexico','United States'];
-  if(elite.some(e=>name.includes(e)))return{avg:2.1,pts:7};
-  if(mid.some(e=>name.includes(e)))return{avg:1.5,pts:5};
-  return{avg:1.0,pts:3};
-}
-
-function runSimulator(){
-  const home=document.getElementById('sim-home').value;
-  const away=document.getElementById('sim-away').value;
-  const N=parseInt(document.getElementById('sim-n').value);
-  if(!home||!away){alert('Seleccioná ambos equipos');return;}
-  if(home===away){alert('Los equipos deben ser distintos');return;}
-  const sh=getTeamStrength(home),sa=getTeamStrength(away);
-  const lH=Math.max(0.3,sh.avg*1.05),lA=Math.max(0.3,sa.avg*0.95);
-  function poisson(lam){let L=Math.exp(-lam),k=0,p=1;do{k++;p*=Math.random();}while(p>L);return k-1;}
-  let hw=0,dr=0,aw=0;const scores={};
-  for(let i=0;i<N;i++){const gh=poisson(lH),ga=poisson(lA);const k=`${gh}-${ga}`;scores[k]=(scores[k]||0)+1;if(gh>ga)hw++;else if(gh===ga)dr++;else aw++;}
-  const top5=Object.entries(scores).sort((a,b)=>b[1]-a[1]).slice(0,5);
-  const most=top5[0][0];
-  const phW=Math.round(hw/N*100),phD=Math.round(dr/N*100),phA=Math.round(aw/N*100);
-  let html=`
-  <div class="sim-result-wrap">
-    <div class="sim-result-score">${flag(home)} ${most} ${flag(away)}</div>
-    <div class="sim-result-label">Resultado más probable · ${N.toLocaleString()} simulaciones</div>
-    <div class="sim-probs">
-      <div class="sim-prob-box"><div class="sim-prob-pct">${phW}%</div><div class="sim-prob-lbl">${flag(home)} Gana</div></div>
-      <div class="sim-prob-box"><div class="sim-prob-pct">${phD}%</div><div class="sim-prob-lbl">Empate</div></div>
-      <div class="sim-prob-box"><div class="sim-prob-pct">${phA}%</div><div class="sim-prob-lbl">${flag(away)} Gana</div></div>
-    </div>
-    <div class="sim-freq-title">Resultados más frecuentes</div>`;
-  top5.forEach(([sc,cnt])=>{const pct=Math.round(cnt/N*100);html+=`
-    <div class="sim-freq-row">
-      <span class="sim-freq-sc">${sc}</span>
-      <div class="sim-freq-bar-wrap"><div class="sim-freq-bar" style="width:${Math.min(100,pct*6)}%"></div></div>
-      <span class="sim-freq-pct">${pct}%</span>
-    </div>`;});
-  html+=`<div class="sim-footnote">Modelo de Poisson basado en goles reales del torneo. Solo orientativo.</div></div>`;
-  document.getElementById('sim-result').innerHTML=html;
 }
 
 function openMatchDetail(id){
@@ -2285,7 +1906,7 @@ function openMatchDetail(id){
   document.getElementById('modal-body').innerHTML=html;
 }
 function closeModal(){document.getElementById('match-modal').classList.remove('open');}
-const MOBILE_PRIMARY_TABS=['fixture','grupos','bracket','goleadores'];
+const MOBILE_PRIMARY_TABS=['fixture','grupos','final8','goleadores'];
 
 function showTab(name,btn){
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
@@ -2711,93 +2332,6 @@ function downloadTercerosPDF(btn){
   },50);
 }
 
-// ── BRACKET PDF ────────────────────────────────────────────────────────────
-function downloadBracketPDF(btn){
-  setBtnLoading(btn,true);
-  setTimeout(()=>{
-    try{
-      const {jsPDF}=window.jspdf;
-      const doc=new jsPDF({unit:'mm',format:'a4'});
-      let y=pdfHeader(doc,'Cuadro de dieciseisavos','Round of 32 · FIFA 2026');
-      const pw=doc.internal.pageSize.getWidth();
-      const colW=(pw-28-8)/2;
-
-      const qualifiedThirds=getQualifiedThirds();
-      const allGroupsComplete=areAllGroupsComplete();
-      const allMatches=[...FIXED_R32.map(m=>({...m,fixed:true})),...THIRD_PLACE_R32.map(m=>({...m,fixed:false}))]
-        .sort((a,b)=>a.num-b.num);
-
-      let col=0, colX=[14,14+colW+8], colY=[y,y];
-
-      allMatches.forEach(m=>{
-        const h=resolveSlot(m.home);
-        let a;
-        if(m.fixed){a=resolveSlot(m.away);}
-        else{
-          const eligibleThird=qualifiedThirds.find(t=>m.thirdGroups.includes(t.group));
-          if(eligibleThird){const name=teamLabel(eligibleThird.team_id);a={name,tag:`3° Grupo ${eligibleThird.group}`,definitive:allGroupsComplete};}
-          else{a={name:null,tag:`Mejor 3° (${m.thirdGroups.join('/')})`,definitive:false};}
-        }
-        const definitive = h.definitive && a.definitive && (m.fixed || allGroupsComplete);
-
-        const blockH=22;
-        if(colY[col]+blockH>doc.internal.pageSize.getHeight()-16){
-          if(col===0){col=1;}
-          else{doc.addPage();y=pdfHeader(doc,'Cuadro de dieciseisavos');colY=[y,y];col=0;}
-        }
-        const x=colX[col]; let cy=colY[col];
-
-        doc.setDrawColor(...(definitive?PDF_GREEN_LT:[210,210,215]));
-        doc.setLineWidth(definitive?0.5:0.25);
-        doc.roundedRect(x,cy,colW,20,1.5,1.5);
-
-        doc.setFontSize(6.5);
-        doc.setFont('helvetica','bold');
-        doc.setTextColor(...PDF_GRAY);
-        doc.text(`PARTIDO ${m.num}`,x+2.5,cy+3.5);
-        doc.setFont('helvetica','normal');
-        doc.text(m.venue,x+colW-2.5,cy+3.5,{align:'right'});
-
-        doc.setDrawColor(230,230,235);
-        doc.line(x+2.5,cy+10,x+colW-2.5,cy+10);
-
-        doc.setFont('helvetica','bold');
-        doc.setFontSize(8);
-        doc.setTextColor(h.name?30:150,h.name?30:150,h.name?35:155);
-        doc.text(h.name||h.tag,x+2.5,cy+8);
-        if(h.name){doc.setFont('helvetica','normal');doc.setFontSize(6);doc.setTextColor(...PDF_GRAY);doc.text(h.tag,x+colW-2.5,cy+8,{align:'right'});}
-
-        doc.setFont('helvetica','bold');
-        doc.setFontSize(8);
-        doc.setTextColor(a.name?30:150,a.name?30:150,a.name?35:155);
-        doc.text(a.name||a.tag,x+2.5,cy+15);
-        if(a.name){doc.setFont('helvetica','normal');doc.setFontSize(6);doc.setTextColor(...PDF_GRAY);doc.text(a.tag,x+colW-2.5,cy+15,{align:'right'});}
-
-        // status badge
-        doc.setFont('helvetica','bold');
-        doc.setFontSize(5.5);
-        doc.setTextColor(...(definitive?PDF_GREEN_LT:PDF_AMBER));
-        doc.text(definitive?'✓ DEFINITIVO':'A CONFIRMAR', x+colW-2.5, cy+18.5, {align:'right'});
-
-        colY[col]=cy+20+3;
-      });
-
-      let noteY=Math.max(colY[0],colY[1])+4;
-      noteY=checkPageBreak(doc,noteY,16,()=>pdfHeader(doc,'Cuadro de dieciseisavos'));
-      doc.setFont('helvetica','normal');
-      doc.setFontSize(7.5);
-      doc.setTextColor(...PDF_GRAY);
-      const note='Cuadro oficial FIFA: 8 cruces fijos entre ganadores y segundos de grupo, y 8 cruces entre un ganador de grupo y el mejor 3° disponible entre un set predefinido de grupos. Se actualiza en vivo a medida que avanza la fase de grupos.';
-      doc.text(doc.splitTextToSize(note,pw-28),14,noteY);
-
-      pdfFooter(doc);
-      doc.save('mundial2026_bracket16avos.pdf');
-    }catch(e){console.error(e);alert('Error al generar el PDF: '+e.message);}
-    setBtnLoading(btn,false);
-  },50);
-}
-
-// ── STATS PDF ──────────────────────────────────────────────────────────────
 // ── FASE FINAL PDF (R16 → Final) ────────────────────────────────────────────
 function downloadFinal8PDF(btn){
   setBtnLoading(btn,true);
@@ -2889,80 +2423,6 @@ function downloadFinal8PDF(btn){
 
       pdfFooter(doc);
       doc.save('mundial2026_fase_final.pdf');
-    }catch(e){console.error(e);alert('Error al generar el PDF: '+e.message);}
-    setBtnLoading(btn,false);
-  },50);
-}
-
-function downloadStatsPDF(btn){
-  setBtnLoading(btn,true);
-  setTimeout(()=>{
-    try{
-      const {jsPDF}=window.jspdf;
-      const doc=new jsPDF({unit:'mm',format:'a4'});
-      let y=pdfHeader(doc,'Estadísticas del torneo');
-      const pw=doc.internal.pageSize.getWidth();
-
-      const played=allGames.filter(g=>gameStatus(g)==='finished');
-      const live=allGames.filter(g=>gameStatus(g)==='live');
-      const goals=played.reduce((s,g)=>s+(homeScore(g)||0)+(awayScore(g)||0),0);
-      const avg=played.length?(goals/played.length).toFixed(1):'0';
-
-      // KPI boxes
-      const kpis=[
-        ['Total partidos',allGames.length,[40,40,45]],
-        ['Jugados',played.length,PDF_GREEN_LT],
-        ['Pendientes',allGames.length-played.length-live.length,PDF_AMBER],
-        ['En vivo',live.length,PDF_RED],
-        ['Goles',goals,PDF_GREEN_LT],
-        ['Goles/partido',avg,[40,40,45]],
-      ];
-      const boxW=(pw-28-5*4)/6;
-      kpis.forEach((k,i)=>{
-        const x=14+i*(boxW+4);
-        doc.setDrawColor(220,220,225);
-        doc.setLineWidth(0.25);
-        doc.roundedRect(x,y,boxW,18,1.5,1.5);
-        doc.setFont('helvetica','bold');
-        doc.setFontSize(14);
-        doc.setTextColor(...k[2]);
-        doc.text(String(k[1]),x+boxW/2,y+10,{align:'center'});
-        doc.setFont('helvetica','normal');
-        doc.setFontSize(5.5);
-        doc.setTextColor(...PDF_GRAY);
-        doc.text(k[0].toUpperCase(),x+boxW/2,y+15,{align:'center'});
-      });
-      y+=26;
-
-      doc.setFillColor(...PDF_LIGHT_GRAY);
-      doc.rect(14,y,pw-28,7,'F');
-      doc.setFont('helvetica','bold');
-      doc.setFontSize(9);
-      doc.setTextColor(...PDF_GREEN);
-      doc.text('PARTIDOS CON MÁS GOLES',17,y+5);
-      y+=11;
-
-      const top=played.map(g=>({...g,total:(homeScore(g)||0)+(awayScore(g)||0)})).sort((a,b)=>b.total-a.total).slice(0,15);
-      top.forEach((g,i)=>{
-        y=checkPageBreak(doc,y,8,()=>pdfHeader(doc,'Estadísticas del torneo'));
-        doc.setDrawColor(235,235,238);
-        doc.line(14,y+6.5,pw-14,y+6.5);
-        doc.setFont('helvetica','normal');
-        doc.setFontSize(7.5);
-        doc.setTextColor(...PDF_GRAY);
-        doc.text(`${i+1}.`,14,y+4.5);
-        doc.setFont('helvetica','bold');
-        doc.setTextColor(30,30,35);
-        const matchTxt=`${homeName(g)} ${homeScore(g)} - ${awayScore(g)} ${awayName(g)}`;
-        doc.text(matchTxt,19,y+4.5);
-        doc.setFont('helvetica','bold');
-        doc.setTextColor(...PDF_AMBER);
-        doc.text(`${g.total} goles`,pw-14,y+4.5,{align:'right'});
-        y+=7;
-      });
-
-      pdfFooter(doc);
-      doc.save('mundial2026_estadisticas.pdf');
     }catch(e){console.error(e);alert('Error al generar el PDF: '+e.message);}
     setBtnLoading(btn,false);
   },50);
