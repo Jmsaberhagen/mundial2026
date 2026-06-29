@@ -812,7 +812,7 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
 }
 .f8-side{display:contents;}
 .f8-col{display:flex;flex-direction:column;gap:0.4rem;min-width:0;}
-.f8-col.f8-r32{justify-content:space-around;gap:0.35rem;height:100%;}
+.f8-col.f8-r32{justify-content:space-around;height:100%;}
 .f8-col.f8-r16{justify-content:space-around;height:100%;}
 .f8-col.f8-qf{justify-content:space-around;height:100%;}
 .f8-col.f8-sf{justify-content:center;height:100%;}
@@ -820,11 +820,12 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
 
 /* Card = una sola fila horizontal: [bandera+código] [score/vs] [código+bandera] */
 .f8-card{
-  position:relative;width:100%;min-width:0;
+  position:relative;width:100%;min-width:0;min-height:34px;
   display:flex;align-items:center;
   background:var(--ink2);border:1px solid var(--border);border-radius:8px;
   padding:0.4rem 0.5rem;gap:0.35rem;
   transition:border-color 0.15s;
+  box-sizing:border-box;
 }
 .f8-card:hover{border-color:var(--border2);}
 .f8-card.f8-definitive{border-color:rgba(82,176,67,0.4);background:linear-gradient(135deg,rgba(82,176,67,0.08),var(--ink2) 60%);}
@@ -1155,7 +1156,7 @@ const API='https://worldcup26.ir/get';
 let allGames=[],allGroups=[],teamsById={};
 
 // FLAGS
-const FLAGS={'Argentina':'🇦🇷','Brazil':'🇧🇷','France':'🇫🇷','Germany':'🇩🇪','Spain':'🇪🇸','England':'🏴󠁧󠁢󠁥󠁮󠁧󠁿','Portugal':'🇵🇹','Netherlands':'🇳🇱','Italy':'🇮🇹','Uruguay':'🇺🇾','Mexico':'🇲🇽','United States':'🇺🇸','USA':'🇺🇸','Canada':'🇨🇦','Japan':'🇯🇵','Morocco':'🇲🇦','Senegal':'🇸🇳','Croatia':'🇭🇷','Denmark':'🇩🇰','Switzerland':'🇨🇭','Belgium':'🇧🇪','Poland':'🇵🇱','South Korea':'🇰🇷','Korea Republic':'🇰🇷','Australia':'🇦🇺','Ecuador':'🇪🇨','Colombia':'🇨🇴','Chile':'🇨🇱','Peru':'🇵🇪','Venezuela':'🇻🇪','Bolivia':'🇧🇴','Paraguay':'🇵🇾','Costa Rica':'🇨🇷','Panama':'🇵🇦','Honduras':'🇭🇳','Jamaica':'🇯🇲','Nigeria':'🇳🇬','Ghana':'🇬🇭','Cameroon':'🇨🇲','Ivory Coast':'🇨🇮','Egypt':'🇪🇬','Tunisia':'🇹🇳','Algeria':'🇩🇿','Mali':'🇲🇱','South Africa':'🇿🇦','Saudi Arabia':'🇸🇦','Iran':'🇮🇷','Iraq':'🇮🇶','Qatar':'🇶🇦','Serbia':'🇷🇸','Czech Republic':'🇨🇿','Czechia':'🇨🇿','Turkey':'🇹🇷','Sweden':'🇸🇪','Ukraine':'🇺🇦','Austria':'🇦🇹','Scotland':'🏴󠁧󠁢󠁳󠁣󠁴󠁿','Wales':'🏴󠁧󠁢󠁷󠁬󠁳󠁿','Slovakia':'🇸🇰','Slovenia':'🇸🇮','Albania':'🇦🇱','Romania':'🇷🇴','Greece':'🇬🇷','Hungary':'🇭🇺','New Zealand':'🇳🇿','Congo DR':'🇨🇩','Indonesia':'🇮🇩','Bosnia and Herzegovina':'🇧🇦','Bosnia':'🇧🇦','United Arab Emirates':'🇦🇪','Uzbekistan':'🇺🇿','Kenya':'🇰🇪'};
+const FLAGS={'Argentina':'🇦🇷','Brazil':'🇧🇷','France':'🇫🇷','Germany':'🇩🇪','Spain':'🇪🇸','England':'🏴󠁧󠁢󠁥󠁮󠁧󠁿','Portugal':'🇵🇹','Netherlands':'🇳🇱','Italy':'🇮🇹','Uruguay':'🇺🇾','Mexico':'🇲🇽','United States':'🇺🇸','USA':'🇺🇸','Canada':'🇨🇦','Japan':'🇯🇵','Morocco':'🇲🇦','Senegal':'🇸🇳','Croatia':'🇭🇷','Denmark':'🇩🇰','Switzerland':'🇨🇭','Belgium':'🇧🇪','Poland':'🇵🇱','South Korea':'🇰🇷','Korea Republic':'🇰🇷','Australia':'🇦🇺','Ecuador':'🇪🇨','Colombia':'🇨🇴','Chile':'🇨🇱','Peru':'🇵🇪','Venezuela':'🇻🇪','Bolivia':'🇧🇴','Paraguay':'🇵🇾','Costa Rica':'🇨🇷','Panama':'🇵🇦','Honduras':'🇭🇳','Jamaica':'🇯🇲','Nigeria':'🇳🇬','Ghana':'🇬🇭','Cameroon':'🇨🇲','Ivory Coast':'🇨🇮','Côte d\'Ivoire':'🇨🇮',"Cote d'Ivoire":'🇨🇮','Egypt':'🇪🇬','Tunisia':'🇹🇳','Algeria':'🇩🇿','Mali':'🇲🇱','South Africa':'🇿🇦','Saudi Arabia':'🇸🇦','Iran':'🇮🇷','Iraq':'🇮🇶','Qatar':'🇶🇦','Serbia':'🇷🇸','Czech Republic':'🇨🇿','Czechia':'🇨🇿','Turkey':'🇹🇷','Türkiye':'🇹🇷','Turkiye':'🇹🇷','Sweden':'🇸🇪','Ukraine':'🇺🇦','Austria':'🇦🇹','Scotland':'🏴󠁧󠁢󠁳󠁣󠁴󠁿','Wales':'🏴󠁧󠁢󠁷󠁬󠁳󠁿','Slovakia':'🇸🇰','Slovenia':'🇸🇮','Albania':'🇦🇱','Romania':'🇷🇴','Greece':'🇬🇷','Hungary':'🇭🇺','New Zealand':'🇳🇿','Congo DR':'🇨🇩','DR Congo':'🇨🇩','DRC':'🇨🇩','Indonesia':'🇮🇩','Bosnia and Herzegovina':'🇧🇦','Bosnia':'🇧🇦','United Arab Emirates':'🇦🇪','Uzbekistan':'🇺🇿','Kenya':'🇰🇪','Cape Verde':'🇨🇻','Cabo Verde':'🇨🇻','Curaçao':'🇨🇼','Curacao':'🇨🇼','Haiti':'🇭🇹','Jordan':'🇯🇴','Norway':'🇳🇴','New Caledonia':'🇳🇨'};
 function flag(n){if(!n)return'🏳️';if(FLAGS[n])return FLAGS[n];for(const[k,v]of Object.entries(FLAGS)){if(n.toLowerCase().includes(k.toLowerCase())||k.toLowerCase().includes(n.toLowerCase()))return v;}return'🏳️';}
 
 function homeName(g){return g.home_team_name_en||'';}
@@ -1178,12 +1179,12 @@ function gameStatus(g){
   return'upcoming';
 }
 function fmtDate(s){if(!s)return'';try{
-  // local_date viene en hora CDT (UTC-5, hora central EEUU donde están la mayoría de sedes)
-  // Argentina = UTC-3 → diferencia = +2 horas
+  // local_date viene en hora ET/EDT (UTC-4, horario oficial FIFA para anunciar partidos)
+  // Argentina = UTC-3 → diferencia = +1 hora
   const[datePart,timePart]=s.split(' ');
   const[m,dy,y]=datePart.split('/');
   const[hh,mm]=(timePart||'00:00').split(':').map(Number);
-  const utcMs=Date.UTC(Number(y),Number(m)-1,Number(dy),hh+5,mm); // CDT→UTC: +5h
+  const utcMs=Date.UTC(Number(y),Number(m)-1,Number(dy),hh+4,mm); // ET/EDT→UTC: +4h
   const argDate=new Date(utcMs - 3*3600000); // UTC→ARG: -3h
   const argH=String(argDate.getUTCHours()).padStart(2,'0');
   const argM=String(argDate.getUTCMinutes()).padStart(2,'0');
@@ -1193,12 +1194,12 @@ function fmtDate(s){if(!s)return'';try{
 }catch{return s;}}
 function parseScorers(raw){if(!raw||raw==='null'||raw==='{}')return[];try{const cleaned=raw.replace(/^\{/,'').replace(/\}$/,'').replace(/\\"/g,'"');const matches=[];const re=/"([^"]+)"/g;let m;while((m=re.exec(cleaned))!==null)matches.push(m[1]);if(matches.length)return matches;return cleaned.split(',').map(s=>s.trim().replace(/^"|"$/g,'')).filter(Boolean);}catch{return[];}}
 function parseLocalDate(s){if(!s)return'';try{
-  // Convierte local_date (CDT = UTC-5) a un Date object UTC correcto
+  // Convierte local_date (ET/EDT = UTC-4, horario oficial FIFA) a un Date object UTC correcto
   const[datePart,timePart]=s.split(' ');
   const[m,dy,y]=datePart.split('/');
   const[hh,mm]=(timePart||'00:00').split(':').map(Number);
-  // CDT es UTC-5, sumamos 5 horas para obtener UTC real
-  return new Date(Date.UTC(Number(y),Number(m)-1,Number(dy),hh+5,mm)).toISOString();
+  // ET/EDT es UTC-4, sumamos 4 horas para obtener UTC real
+  return new Date(Date.UTC(Number(y),Number(m)-1,Number(dy),hh+4,mm)).toISOString();
 }catch{return s;}}
 
 async function loadAll(){
@@ -1248,7 +1249,7 @@ let countdownTargetGame=null;
 
 function getArgentinaNow(){
   // Current time, treated as Argentina (UTC-3) reference for comparison purposes.
-  // parseLocalDate() already converts API's CDT timestamps into a correct UTC ISO string,
+  // parseLocalDate() already converts API's ET/EDT timestamps into a correct UTC ISO string,
   // so comparing against the real "now" (also UTC-based via Date) is consistent.
   return new Date();
 }
