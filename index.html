@@ -1892,32 +1892,6 @@ function f8CodeFor(name){
   return(info&&info.code)?info.code:name.slice(0,3).toUpperCase();
 }
 
-// Resuelve un lado {name, code, known} para partidos 73-88 (calculados en cliente)
-function f8ResolveR32Side(matchNum,side){
-  const m=F8_R32_BY_NUM[matchNum];
-  if(!m)return{name:null,code:'',known:false,tag:'Por confirmar'};
-  if(side==='home'){
-    const r=resolveSlot(m.home);
-    return{name:r.name,code:f8CodeFor(r.name),known:!!r.name,tag:r.tag};
-  }
-  // away: puede ser slot fijo o mejor-tercero dinámico
-  if(m.away){
-    const r=resolveSlot(m.away);
-    return{name:r.name,code:f8CodeFor(r.name),known:!!r.name,tag:r.tag};
-  }
-  if(m.thirdGroups){
-    const qualifiedThirds=getQualifiedThirds();
-    const allGroupsComplete=areAllGroupsComplete();
-    const eligibleThird=qualifiedThirds.find(t=>m.thirdGroups.includes(t.group));
-    if(eligibleThird){
-      const name=teamLabel(eligibleThird.team_id);
-      return{name,code:f8CodeFor(name),known:!!name,tag:`3° Grupo ${eligibleThird.group}${allGroupsComplete?'':' (proy.)'}`};
-    }
-    return{name:null,code:'',known:false,tag:`Mejor 3° (${m.thirdGroups.join('/')})`};
-  }
-  return{name:null,code:'',known:false,tag:'Por confirmar'};
-}
-
 // Resuelve un lado {name, code, known} para partidos 89-104 (vienen de la API)
 function f8ResolveApiSide(g,side){
   const tid=g[`${side}_team_id`];
@@ -1931,22 +1905,14 @@ function f8ResolveApiSide(g,side){
 
 // Punto único de entrada: resuelve cualquier partido 73-104 con su estado y ambos lados
 function f8ResolveMatch(matchId){
-  const isR32=matchId>=73&&matchId<=88;
-  if(isR32){
-    const m=F8_R32_BY_NUM[matchId];
-    const h=f8ResolveR32Side(matchId,'home');
-    const a=f8ResolveR32Side(matchId,'away');
-    // un 16avo es "finished" sólo si existe en allGames con finished=true (ya se jugó en la realidad)
-    const g=getGameById(matchId);
-    const status=g?gameStatus(g):'upcoming';
-    const hs=g?homeScore(g):null, as=g?awayScore(g):null;
-    return{home:h,away:a,status,hs,as,venue:m?m.venue:'',localDate:g?g.local_date:null};
-  }
+  // Fase de grupos finalizada: los 16avos (73-88) ya están 100% confirmados por la API,
+  // igual que 89-104. Se resuelven todos de la misma forma, directo desde los datos reales.
+  const m=F8_R32_BY_NUM[matchId];
   const g=getGameById(matchId);
-  if(!g)return{home:{name:null,code:'',known:false,tag:'Por confirmar'},away:{name:null,code:'',known:false,tag:'Por confirmar'},status:'upcoming',hs:null,as:null,venue:'',localDate:null};
+  if(!g)return{home:{name:null,code:'',known:false,tag:'Por confirmar'},away:{name:null,code:'',known:false,tag:'Por confirmar'},status:'upcoming',hs:null,as:null,venue:m?m.venue:'',localDate:null};
   const h=f8ResolveApiSide(g,'home'), a=f8ResolveApiSide(g,'away');
   const status=gameStatus(g);
-  return{home:h,away:a,status,hs:homeScore(g),as:awayScore(g),venue:g.venue||'',localDate:g.local_date};
+  return{home:h,away:a,status,hs:homeScore(g),as:awayScore(g),venue:g.venue||(m?m.venue:''),localDate:g.local_date};
 }
 
 // Tarjeta de partido en fila horizontal única: [bandera+código] vs [código+bandera]
