@@ -837,7 +837,7 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
 .f8-side-slot.f8-winner .f8-code{color:var(--lime);}
 .f8-side-slot.f8-side-tbd{opacity:0.5;}
 
-.f8-flag{font-size:1.15rem;line-height:1;flex-shrink:0;}
+.f8-flag-img{width:18px;height:13px;border-radius:2px;object-fit:cover;flex-shrink:0;display:inline-block;vertical-align:middle;box-shadow:0 0 0 1px rgba(255,255,255,0.08);}
 .f8-flag-ph{width:18px;height:13px;border-radius:2px;background:var(--ink4);border:1px solid var(--border);flex-shrink:0;display:inline-block;}
 .f8-code{font-family:'Barlow Condensed',sans-serif;font-size:0.78rem;font-weight:800;letter-spacing:0.03em;color:var(--text);white-space:nowrap;}
 
@@ -1157,6 +1157,23 @@ let allGames=[],allGroups=[],teamsById={};
 
 // FLAGS
 const FLAGS={'Argentina':'🇦🇷','Brazil':'🇧🇷','France':'🇫🇷','Germany':'🇩🇪','Spain':'🇪🇸','England':'🏴󠁧󠁢󠁥󠁮󠁧󠁿','Portugal':'🇵🇹','Netherlands':'🇳🇱','Italy':'🇮🇹','Uruguay':'🇺🇾','Mexico':'🇲🇽','United States':'🇺🇸','USA':'🇺🇸','Canada':'🇨🇦','Japan':'🇯🇵','Morocco':'🇲🇦','Senegal':'🇸🇳','Croatia':'🇭🇷','Denmark':'🇩🇰','Switzerland':'🇨🇭','Belgium':'🇧🇪','Poland':'🇵🇱','South Korea':'🇰🇷','Korea Republic':'🇰🇷','Australia':'🇦🇺','Ecuador':'🇪🇨','Colombia':'🇨🇴','Chile':'🇨🇱','Peru':'🇵🇪','Venezuela':'🇻🇪','Bolivia':'🇧🇴','Paraguay':'🇵🇾','Costa Rica':'🇨🇷','Panama':'🇵🇦','Honduras':'🇭🇳','Jamaica':'🇯🇲','Nigeria':'🇳🇬','Ghana':'🇬🇭','Cameroon':'🇨🇲','Ivory Coast':'🇨🇮','Côte d\'Ivoire':'🇨🇮',"Cote d'Ivoire":'🇨🇮','Egypt':'🇪🇬','Tunisia':'🇹🇳','Algeria':'🇩🇿','Mali':'🇲🇱','South Africa':'🇿🇦','Saudi Arabia':'🇸🇦','Iran':'🇮🇷','Iraq':'🇮🇶','Qatar':'🇶🇦','Serbia':'🇷🇸','Czech Republic':'🇨🇿','Czechia':'🇨🇿','Turkey':'🇹🇷','Türkiye':'🇹🇷','Turkiye':'🇹🇷','Sweden':'🇸🇪','Ukraine':'🇺🇦','Austria':'🇦🇹','Scotland':'🏴󠁧󠁢󠁳󠁣󠁴󠁿','Wales':'🏴󠁧󠁢󠁷󠁬󠁳󠁿','Slovakia':'🇸🇰','Slovenia':'🇸🇮','Albania':'🇦🇱','Romania':'🇷🇴','Greece':'🇬🇷','Hungary':'🇭🇺','New Zealand':'🇳🇿','Congo DR':'🇨🇩','DR Congo':'🇨🇩','DRC':'🇨🇩','Indonesia':'🇮🇩','Bosnia and Herzegovina':'🇧🇦','Bosnia':'🇧🇦','United Arab Emirates':'🇦🇪','Uzbekistan':'🇺🇿','Kenya':'🇰🇪','Cape Verde':'🇨🇻','Cabo Verde':'🇨🇻','Curaçao':'🇨🇼','Curacao':'🇨🇼','Haiti':'🇭🇹','Jordan':'🇯🇴','Norway':'🇳🇴','New Caledonia':'🇳🇨'};
+const FLAG_ISO={'Argentina':'ar','Brazil':'br','France':'fr','Germany':'de','Spain':'es','England':'gb-eng','Portugal':'pt','Netherlands':'nl','Uruguay':'uy','Mexico':'mx','United States':'us','USA':'us','Canada':'ca','Japan':'jp','Morocco':'ma','Senegal':'sn','Croatia':'hr','Switzerland':'ch','Belgium':'be','South Korea':'kr','Korea Republic':'kr','Australia':'au','Ecuador':'ec','Colombia':'co','Paraguay':'py','Panama':'pa','Ghana':'gh','Cameroon':'cm','Ivory Coast':'ci',"Côte d'Ivoire":'ci',"Cote d'Ivoire":'ci','Egypt':'eg','Tunisia':'tn','Algeria':'dz','South Africa':'za','Saudi Arabia':'sa','Iran':'ir','Iraq':'iq','Qatar':'qa','Czechia':'cz','Turkey':'tr','Türkiye':'tr','Turkiye':'tr','Sweden':'se','Austria':'at','Scotland':'gb-sct','New Zealand':'nz','Congo DR':'cd','DR Congo':'cd','DRC':'cd','Bosnia and Herzegovina':'ba','Bosnia':'ba','Uzbekistan':'uz','Cape Verde':'cv','Cabo Verde':'cv','Curaçao':'cw','Curacao':'cw','Haiti':'ht','Jordan':'jo','Norway':'no'};
+function flagCodeFor(name){
+  if(!name)return null;
+  if(FLAG_ISO[name])return FLAG_ISO[name];
+  for(const[k,v]of Object.entries(FLAG_ISO)){
+    if(name.toLowerCase().includes(k.toLowerCase())||k.toLowerCase().includes(name.toLowerCase()))return v;
+  }
+  return null;
+}
+// Devuelve <img> de flagcdn.com en vez de emoji: Windows+Chrome no renderiza emojis de bandera
+// (Segoe UI Emoji no soporta la ligadura de "regional indicators"), mostrando letras sueltas rotas.
+function flagImg(name,size){
+  size=size||'24x18';
+  const code=flagCodeFor(name);
+  if(!code)return'<span class="f8-flag-ph"></span>';
+  return`<img class="f8-flag-img" src="https://flagcdn.com/${size}/${code}.png" alt="${name}" loading="lazy" onerror="this.style.display='none'">`;
+}
 function flag(n){if(!n)return'🏳️';if(FLAGS[n])return FLAGS[n];for(const[k,v]of Object.entries(FLAGS)){if(n.toLowerCase().includes(k.toLowerCase())||k.toLowerCase().includes(n.toLowerCase()))return v;}return'🏳️';}
 
 function homeName(g){return g.home_team_name_en||'';}
@@ -1951,7 +1968,7 @@ function f8CardHtml(matchId){
       </div>`;
     }
     const codeEl=`<span class="f8-code">${side.code}</span>`;
-    const flagEl=`<span class="f8-flag">${flag(side.name)}</span>`;
+    const flagEl=flagImg(side.name);
     return`<div class="f8-side-slot f8-${align}${win?' f8-winner':''}" title="${side.name}">
       ${align==='left'?codeEl+flagEl:flagEl+codeEl}
     </div>`;
