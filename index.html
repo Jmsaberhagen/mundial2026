@@ -714,19 +714,38 @@ main{padding:1.5rem;max-width:1100px;margin:0 auto;}
 
 @media(max-width:860px){
   #tab-final8{max-width:none;margin:0;padding:0;}
-  .f8-root{display:flex;flex-direction:column;align-items:center;gap:1.5rem;}
-  .f8-side,.f8-side.f8-right{display:flex;flex-direction:column;width:100%;}
-  .f8-col{width:100%;align-items:center;height:auto;}
-  .f8-card{width:100%;max-width:220px;}
-  .f8-trophy-col{padding:0.5rem 0;}
-  .f8-final-card{width:100%;max-width:220px;}
-  .f8-mobile-round-title{
-    font-family:'Barlow Condensed',sans-serif;font-size:0.95rem;font-weight:800;text-transform:uppercase;
-    letter-spacing:0.06em;color:var(--green);text-align:center;width:100%;
-    padding-top:0.5rem;border-top:1px solid var(--border);
+
+  /* Pestañas de ronda (16avos/8vos/4tos/Semis/Final) */
+  .f8m-tabs{
+    display:flex;gap:0.4rem;overflow-x:auto;padding:0 0.25rem 0.75rem;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none;
   }
-  .f8-mobile-round-title:first-child{border-top:none;padding-top:0;}
+  .f8m-tabs::-webkit-scrollbar{display:none;}
+  .f8m-tab{
+    flex-shrink:0;padding:0.4rem 0.85rem;border-radius:20px;
+    background:var(--ink2);border:1px solid var(--border);color:var(--muted);
+    font-family:'Barlow Condensed',sans-serif;font-size:0.78rem;font-weight:700;
+    letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;
+    transition:all 0.15s;
+  }
+  .f8m-tab.active{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+
+  .f8m-bracket-wrap{position:relative;}
+  .f8m-cols{display:flex;gap:0;position:relative;z-index:2;}
+  .f8m-col{
+    flex:1 1 50%;min-width:0;display:flex;flex-direction:column;gap:0.5rem;
+    padding:0 0.5rem;
+  }
+  .f8m-col-next{align-items:center;justify-content:center;}
+  .f8m-col .f8-card{width:100%;max-width:none;}
+  .f8m-col .f8-mobile-round-title{
+    font-family:'Barlow Condensed',sans-serif;font-size:0.85rem;font-weight:800;text-transform:uppercase;
+    letter-spacing:0.05em;color:var(--green);text-align:center;margin-bottom:0.2rem;
+  }
+  .f8m-col-next .f8-trophy-col{padding:0;}
 }
+
+/* Layout vertical viejo (ya no usado en mobile, queda para no romper el desktop full-width override) */
 
 /* ── BOTTOM NAV (hidden on desktop, shown via mobile media query) ── */
 .more-menu-backdrop{
@@ -1577,6 +1596,24 @@ const F8_LABEL_RE=/(Winner|Runner-up|Loser)\s+Match\s+(\d+)/i;
 const F8_R32_BY_NUM={};
 [...FIXED_R32.map(m=>({...m,thirdGroups:null})),...THIRD_PLACE_R32.map(m=>({...m,away:null}))].forEach(m=>F8_R32_BY_NUM[m.num]=m);
 
+// Rondas en orden, usadas por el selector de pestañas en mobile
+const F8_ROUNDS=[
+  {key:'r32',label:'16avos',ids:[73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88]},
+  {key:'r16',label:'8vos',ids:[89,90,91,92,93,94,95,96]},
+  {key:'qf',label:'4tos',ids:[97,98,99,100]},
+  {key:'sf',label:'Semis',ids:[101,102]},
+  {key:'final',label:'Final',ids:[104]},
+];
+// Mapa completo padre→hijo (qué partidos alimentan a cuál), para dibujar conectores
+// entre cualquier par de rondas consecutivas, en mobile o desktop.
+const F8_PARENT_MAP={
+  89:[74,77],90:[73,75],91:[76,78],92:[79,80],
+  93:[83,84],94:[81,82],95:[86,88],96:[85,87],
+  97:[89,90],98:[93,94],99:[91,92],100:[95,96],
+  101:[97,98],102:[99,100],
+  104:[101,102],
+};
+
 function getGameById(id){
   return allGames.find(g=>String(g.id)===String(id))||null;
 }
@@ -1722,22 +1759,33 @@ function renderFinal8(){
     html+='</div>'; // /f8-bracket-wrap
     html+=`<div class="f8-trophy-row">${trophyBlock}</div>`;
   } else {
-    // ── MOBILE: vertical, 16avos arriba bajando a la final ──
-    html+='<div class="f8-root">';
-    html+='<div class="f8-col">';
-    html+='<div class="f8-mobile-round-title">Dieciseisavos</div>';
-    html+=[73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88].map(id=>f8CardHtml(id)).join('');
-    html+='<div class="f8-mobile-round-title">Octavos de final</div>';
-    html+=[89,90,91,92,93,94,95,96].map(id=>f8CardHtml(id)).join('');
-    html+='<div class="f8-mobile-round-title">Cuartos de final</div>';
-    html+=[97,98,99,100].map(id=>f8CardHtml(id)).join('');
-    html+='<div class="f8-mobile-round-title">Semifinales</div>';
-    html+=[101,102].map(id=>f8CardHtml(id)).join('');
-    html+='<div class="f8-mobile-round-title">Final</div>';
-    html+=`<div class="f8-final-card">${f8CardHtml(104)}</div>`;
-    html+=trophyBlock;
+    // ── MOBILE: 2 columnas visibles (ronda actual + siguiente) con pestañas para saltar ──
+    if(window._f8MobileRoundIdx===undefined)window._f8MobileRoundIdx=0;
+    const idx=Math.min(window._f8MobileRoundIdx,F8_ROUNDS.length-1);
+    const round=F8_ROUNDS[idx];
+    const nextRound=F8_ROUNDS[idx+1]||null;
+
+    html+='<div class="f8m-tabs">';
+    F8_ROUNDS.forEach((r,i)=>{
+      html+=`<button class="f8m-tab${i===idx?' active':''}" onclick="f8SetMobileRound(${i})">${r.label}</button>`;
+    });
     html+='</div>';
+
+    html+='<div class="f8m-bracket-wrap">';
+    html+='<svg class="f8-connectors" id="f8-connectors-svg"></svg>';
+    html+='<div class="f8m-cols">';
+    html+=`<div class="f8m-col"><div class="f8-mobile-round-title">${round.label}</div>${round.ids.map(id=>f8CardHtml(id)).join('')}</div>`;
+    if(nextRound){
+      html+=`<div class="f8m-col f8m-col-next"><div class="f8-mobile-round-title">${nextRound.label}</div>${nextRound.ids.map(id=>f8CardHtml(id)).join('')}</div>`;
+    } else {
+      html+=`<div class="f8m-col f8m-col-next">${trophyBlock}</div>`;
+    }
     html+='</div>';
+    html+='</div>'; // /f8m-bracket-wrap
+
+    if(round.key==='final'){
+      html+=`<div class="f8-trophy-row">${trophyBlock}</div>`;
+    }
   }
 
   // Partido por el 3er puesto
@@ -1748,15 +1796,13 @@ function renderFinal8(){
 
   wrap.innerHTML=html;
 
-  if(!isMobile){
-    const doDraw=()=>requestAnimationFrame(()=>requestAnimationFrame(drawF8Connectors));
-    if(document.fonts&&document.fonts.ready){document.fonts.ready.then(doDraw);}else{doDraw();}
-  }
+  const doDraw=()=>requestAnimationFrame(()=>requestAnimationFrame(drawF8Connectors));
+  if(document.fonts&&document.fonts.ready){document.fonts.ready.then(doDraw);}else{doDraw();}
 }
 
 function drawF8Connectors(){
   const svg=document.getElementById('f8-connectors-svg');
-  const wrapEl=svg?svg.closest('.f8-bracket-wrap'):null;
+  const wrapEl=svg?svg.closest('.f8-bracket-wrap,.f8m-bracket-wrap'):null;
   if(!svg||!wrapEl)return;
   const wrapRect=wrapEl.getBoundingClientRect();
   svg.setAttribute('width',wrapRect.width);
@@ -1815,26 +1861,42 @@ function drawF8Connectors(){
     dots+=`<circle cx="${child.right}" cy="${child.midY}" r="3"/>`;
   }
 
-  // IZQUIERDA: 74+77→89, 73+75→90, 76+78→91, 79+80→92, 89+90→97, 91+92→98, 97+98→101, 101→104
-  connectLeft([74,77],89);
-  connectLeft([73,75],90);
-  connectLeft([76,78],91);
-  connectLeft([79,80],92);
-  connectLeft([89,90],97);
-  connectLeft([91,92],98);
-  connectLeft([97,98],101);
-  connectLeft([101],104);
-  // DERECHA: 83+84→93, 81+82→94, 86+88→95, 85+87→96, 93+94→99, 95+96→100, 99+100→102, 102→104
-  connectRight([83,84],93);
-  connectRight([81,82],94);
-  connectRight([86,88],95);
-  connectRight([85,87],96);
-  connectRight([93,94],99);
-  connectRight([95,96],100);
-  connectRight([99,100],102);
-  connectRight([102],104);
+  const isMobileLayout=!!wrapEl.querySelector('.f8m-cols');
+  if(isMobileLayout){
+    // Mobile: solo 2 columnas visibles (ronda actual a la izq, siguiente a la der).
+    // Conectamos automáticamente cada hijo visible con sus padres visibles según F8_PARENT_MAP.
+    Object.entries(F8_PARENT_MAP).forEach(([childId,parentIds])=>{
+      const child=document.getElementById('f8-card-'+childId);
+      const anyParentVisible=parentIds.some(pid=>document.getElementById('f8-card-'+pid));
+      if(child&&anyParentVisible)connectLeft(parentIds,childId);
+    });
+  } else {
+    // IZQUIERDA: 74+77→89, 73+75→90, 76+78→91, 79+80→92, 89+90→97, 91+92→98, 97+98→101, 101→104
+    connectLeft([74,77],89);
+    connectLeft([73,75],90);
+    connectLeft([76,78],91);
+    connectLeft([79,80],92);
+    connectLeft([89,90],97);
+    connectLeft([91,92],98);
+    connectLeft([97,98],101);
+    connectLeft([101],104);
+    // DERECHA: 83+84→93, 81+82→94, 86+88→95, 85+87→96, 93+94→99, 95+96→100, 99+100→102, 102→104
+    connectRight([83,84],93);
+    connectRight([81,82],94);
+    connectRight([86,88],95);
+    connectRight([85,87],96);
+    connectRight([93,94],99);
+    connectRight([95,96],100);
+    connectRight([99,100],102);
+    connectRight([102],104);
+  }
 
   svg.innerHTML=paths+dots;
+}
+
+function f8SetMobileRound(idx){
+  window._f8MobileRoundIdx=idx;
+  renderFinal8();
 }
 
 window.addEventListener('resize',()=>{
